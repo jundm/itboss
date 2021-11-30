@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   HeaderOutLineSmall,
   MenuLi,
@@ -32,7 +33,9 @@ const HeaderSmall = (props: HeaderProps) => {
               <MenuLi>😆소통</MenuLi>
               <MenuLi>🥳뉴스</MenuLi>
             </MenuUl>
-            <LoginSignUp>😘로그인</LoginSignUp>
+            <Link to="/login">
+              <LoginSignUp>😘로그인</LoginSignUp>
+            </Link>
           </WidthDiv>
         </Div>
       </HeaderOutLineSmall>

@@ -14,7 +14,11 @@ const SignUp = loadable(() => import("@/pages/SignUp"));
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const isPadding = isOpen ? "50px" : "230px";
-  const PaddingTop = styled.div`
+  const GlobalBodyCss = styled.div`
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
     padding-top: ${isPadding};
   `;
   return (
@@ -25,13 +29,13 @@ function App() {
         ) : (
           <HeaderBig setIsOpen={setIsOpen} />
         )}
-        <PaddingTop>
+        <GlobalBodyCss>
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>
-        </PaddingTop>
+        </GlobalBodyCss>
       </div>
     </BrowserRouter>
   );

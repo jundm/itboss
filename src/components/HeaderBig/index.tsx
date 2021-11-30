@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   HeaderOutLineBig,
   MenuLi,
@@ -27,8 +28,12 @@ const HeaderBig = (props: HeaderProps) => {
       <HeaderOutLineBig>
         <WidthDiv>
           <AuthenticationDiv>
-            <LoginSignUp>😘로그인</LoginSignUp>
-            <LoginSignUp>🥰회원가입</LoginSignUp>
+            <Link to="/login">
+              <LoginSignUp>😘로그인</LoginSignUp>
+            </Link>
+            <Link to="/signup">
+              <LoginSignUp>🥰회원가입</LoginSignUp>
+            </Link>
           </AuthenticationDiv>
         </WidthDiv>
         <Div>
