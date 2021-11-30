@@ -22,22 +22,18 @@ const SignUp = () => {
     });
   };
 
-  const Register = async (e: { preventDefault: () => void }) => {
+  const Register = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (password !== setPassword) {
       alert("비밀번호가 일치하지 않습니다");
     } else {
-      await createUserWithEmailAndPassword(auth, email, password)
+      createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
-          alert("축하합니다! 회원가입이 정상적으로 되었습니다!");
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log("errorCode", errorCode);
-          console.log("errorMessage", errorMessage);
         });
     }
     setInputs({
@@ -47,25 +43,27 @@ const SignUp = () => {
     });
   };
 
-  const user = auth.currentUser;
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      console.log(uid, "유저가 로그인 되었습니다");
-      const displayName = user.displayName;
-      const email = user.email;
-      const photoURL = user.photoURL;
-      const emailVerified = user.emailVerified;
+  // const user = auth.currentUser;
+  // console.log("user", user);
 
-      console.log("displayName", displayName); // null
-      console.log("email", email); // true
-      console.log("photoURL", photoURL); //null
-      console.log("emailVerified", emailVerified); //false
-      console.log("uid", uid); // true
-    } else {
-      console.log("로그인되어있지 않았습니다");
-    }
-  });
+  // onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //     const uid = user.uid;
+  //     console.log(uid, "유저가 로그인 되었습니다");
+  //     const displayName = user.displayName;
+  //     const email = user.email;
+  //     const photoURL = user.photoURL;
+  //     const emailVerified = user.emailVerified;
+
+  //     console.log("displayName", displayName); // null
+  //     // console.log("email", email); // true
+  //     // console.log("photoURL", photoURL); //null
+  //     // console.log("emailVerified", emailVerified); //false
+  //     // console.log("uid", uid); // true
+  //   } else {
+  //     console.log("로그인되어있지 않았습니다");
+  //   }
+  // });
 
   return (
     <>
