@@ -6,8 +6,6 @@ import {
 } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
 import { LoginDiv } from "./styles";
-import { useSelector } from "react-redux";
-import { persistor } from "@/utils/Toolkit/store";
 
 const Login = () => {
   const [inputs, setInputs] = useState({

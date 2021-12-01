@@ -8,9 +8,9 @@ import {
   Logo,
   AuthenticationDiv,
   WidthDiv,
-  LoginSignUp,
   Div,
   FaceDiv,
+  LoginSignUp,
   FaceMessageDiv,
 } from "./styles";
 import { loginUser } from "@/utils/Toolkit/Slice/userSlice";
@@ -26,16 +26,16 @@ const HeaderBig = (props: HeaderProps) => {
   };
   const LogoSrc =
     "https://user-images.githubusercontent.com/80582578/144034480-76511228-6aae-49da-ba24-92220954ce41.png";
-  const checkUser = useSelector(loginUser);
   const isNickname = props.isNickname;
-  console.log("header", isNickname);
   return (
     <>
       <HeaderOutLineBig>
         <WidthDiv>
           <AuthenticationDiv>
             {isNickname ? (
-              <div>{isNickname}님! 반갑습니다</div>
+              <>
+                <div>{isNickname}님! 반갑습니다</div>
+              </>
             ) : (
               <>
                 <Link to="/login">

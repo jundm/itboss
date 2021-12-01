@@ -1,7 +1,7 @@
 // 라이브러리
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import loadable from "@loadable/component";
 import { onAuthStateChanged } from "@firebase/auth";
@@ -11,7 +11,6 @@ import HeaderBig from "@/components/HeaderBig";
 import HeaderSmall from "@/components/HeaderSmall";
 import { auth } from "./utils/Firebase/firebaseConfig";
 import { loginUser } from "./utils/Toolkit/Slice/userSlice";
-import { persistor } from "./utils/Toolkit/store";
 
 // 페이지(코드 스플리팅 (페이지 단위로 하는게 좋다))
 const Main = loadable(() => import("@/layouts/Main"));
@@ -29,7 +28,7 @@ function App() {
         console.log("상태:로그인");
         // console.log("effectUser", userCredential);
         dispatch(loginUser(userCredential.displayName));
-        setIsNickname(checkUser.payload.userReducer.user);
+        setIsNickname(checkUser.payload.user.user);
       } else {
         console.log("상태:로그아웃");
       }
@@ -47,44 +46,7 @@ function App() {
     justify-content: center;
     padding-top: ${isPadding};
   `;
-  // const aame = JSON.stringify(localStorage);
-  // console.log("localStorage", localStorage.getItem("user"));
 
-  // const loadState = () => {
-  //   try {
-  //     const serializedState = localStorage.getItem("userReducer");
-  //     if (serializedState === null) {
-  //       return undefined;
-  //     }
-  //     return JSON.parse(serializedState);
-  //   } catch (err) {
-  //     return undefined;
-  //   }
-  // };
-  // console.log("loadState", loadState);
-
-  const saveState = (state: any) => {
-    try {
-      const serializedState = JSON.stringify(state);
-      localStorage.setItem("state", serializedState);
-    } catch {
-      // ignore write errors
-    }
-  };
-  saveState("test");
-  console.log("saveState");
-  const loadState = () => {
-    try {
-      const serializedState = localStorage.getItem("state");
-      if (serializedState === null) {
-        return undefined;
-      }
-      return JSON.parse(serializedState);
-    } catch (err) {
-      return undefined;
-    }
-  };
-  console.log("  loadState()", loadState());
   return (
     <BrowserRouter>
       <div className="App">
