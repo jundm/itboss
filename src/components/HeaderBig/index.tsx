@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   HeaderOutLineBig,
   MenuLi,
@@ -12,8 +13,10 @@ import {
   FaceDiv,
   FaceMessageDiv,
 } from "./styles";
+import { loginUser } from "@/utils/Toolkit/Slice/userSlice";
 
 interface HeaderProps {
+  isNickname: any;
   setIsOpen: (arg: (isOpen: any) => boolean) => void;
 }
 
@@ -23,17 +26,26 @@ const HeaderBig = (props: HeaderProps) => {
   };
   const LogoSrc =
     "https://user-images.githubusercontent.com/80582578/144034480-76511228-6aae-49da-ba24-92220954ce41.png";
+  const checkUser = useSelector(loginUser);
+  const isNickname = props.isNickname;
+  console.log("header", isNickname);
   return (
     <>
       <HeaderOutLineBig>
         <WidthDiv>
           <AuthenticationDiv>
-            <Link to="/login">
-              <LoginSignUp>😘로그인</LoginSignUp>
-            </Link>
-            <Link to="/signup">
-              <LoginSignUp>🥰회원가입</LoginSignUp>
-            </Link>
+            {isNickname ? (
+              <div>{isNickname}님! 반갑습니다</div>
+            ) : (
+              <>
+                <Link to="/login">
+                  <LoginSignUp>😘로그인</LoginSignUp>
+                </Link>
+                <Link to="/signup">
+                  <LoginSignUp>🥰회원가입</LoginSignUp>
+                </Link>
+              </>
+            )}
           </AuthenticationDiv>
         </WidthDiv>
         <Div>

@@ -6,6 +6,8 @@ import {
 } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
 import { LoginDiv } from "./styles";
+import { useSelector } from "react-redux";
+import { persistor } from "@/utils/Toolkit/store";
 
 const Login = () => {
   const [inputs, setInputs] = useState({
@@ -37,15 +39,11 @@ const Login = () => {
   const signOutButton = () => {
     signOut(auth)
       .then(() => {
-        console.log("로그아웃 성공");
+        console.log("로그아웃 되었습니다");
       })
       .catch((error) => {
         console.log("error", error);
       });
-    setInputs({
-      email: "",
-      password: "",
-    });
   };
 
   return (

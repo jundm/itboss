@@ -22,6 +22,7 @@ export const AuthenticationDiv = styled.div`
   display: flex;
   justify-content: right;
   text-align: center;
+  z-index: 20;
 `;
 export const LoginSignUp = styled.div`
   margin-right: 10px;
