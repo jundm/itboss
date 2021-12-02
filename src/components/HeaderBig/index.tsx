@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { signOutButton } from "@/elements/auth";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import {
   HeaderOutLineBig,
   MenuLi,
@@ -12,11 +12,14 @@ import {
   FaceDiv,
   LoginSignUp,
   FaceMessageDiv,
+  HeaderLoginDiv,
+  UserNameDiv,
+  ProfileDiv,
+  Logout,
 } from "./styles";
-import { loginUser } from "@/utils/Toolkit/Slice/userSlice";
 
 interface HeaderProps {
-  isNickname: any;
+  isNickname: string;
   setIsOpen: (arg: (isOpen: any) => boolean) => void;
 }
 
@@ -26,15 +29,22 @@ const HeaderBig = (props: HeaderProps) => {
   };
   const LogoSrc =
     "https://user-images.githubusercontent.com/80582578/144034480-76511228-6aae-49da-ba24-92220954ce41.png";
-  const isNickname = props.isNickname;
+  if (props.isNickname != "") {
+    localStorage.setItem("Nick", props.isNickname);
+  }
+  const NickName = localStorage.getItem("Nick");
   return (
     <>
       <HeaderOutLineBig>
         <WidthDiv>
           <AuthenticationDiv>
-            {isNickname ? (
+            {NickName ? (
               <>
-                <div>{isNickname}님! 반갑습니다</div>
+                <HeaderLoginDiv>
+                  <ProfileDiv>프사</ProfileDiv>
+                  <UserNameDiv>{NickName}</UserNameDiv>
+                  <Logout onClick={signOutButton}>로그아웃</Logout>
+                </HeaderLoginDiv>
               </>
             ) : (
               <>

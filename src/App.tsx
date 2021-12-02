@@ -21,22 +21,22 @@ function App() {
   const dispatch = useDispatch();
   const checkUser = useSelector(loginUser);
 
+  const [isOpen, setIsOpen] = useState(false); // 하위에서 클릭 정보 받아오기
+  const [isNickname, setIsNickname] = useState("");
+
   useEffect(() => {
     onAuthStateChanged(auth, (userCredential) => {
-      // console.log("effectAuth", auth);
       if (userCredential) {
         console.log("상태:로그인");
-        // console.log("effectUser", userCredential);
         dispatch(loginUser(userCredential.displayName));
         setIsNickname(checkUser.payload.user.user);
       } else {
         console.log("상태:로그아웃");
+        localStorage.setItem("Nick", "");
+        setIsNickname("");
       }
     });
-  }, [checkUser, dispatch]);
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [isNickname, setIsNickname] = useState("");
+  }, [isNickname, dispatch, checkUser]);
 
   const isPadding = isOpen ? "50px" : "230px";
   const GlobalBodyCss = styled.div`
@@ -51,7 +51,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         {isOpen ? (
-          <HeaderSmall setIsOpen={setIsOpen} />
+          <HeaderSmall setIsOpen={setIsOpen} isNickname={isNickname} />
         ) : (
           <HeaderBig setIsOpen={setIsOpen} isNickname={isNickname} />
         )}

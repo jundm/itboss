@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import {
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from "@firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
 import { LoginDiv } from "./styles";
+import { signOutButton } from "@/elements/auth";
 
 const Login = () => {
   const [inputs, setInputs] = useState({
@@ -13,7 +10,6 @@ const Login = () => {
     password: "",
   });
   const { email, password } = inputs;
-
   const onChange = (e: any) => {
     const { name, value } = e.target;
     setInputs({
@@ -22,7 +18,7 @@ const Login = () => {
     });
   };
 
-  const signInButton = () => {
+  function signInButton() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -32,17 +28,7 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
-  };
-
-  const signOutButton = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("로그아웃 되었습니다");
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
+  }
 
   return (
     <>

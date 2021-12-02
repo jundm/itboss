@@ -35,6 +35,25 @@ export const LoginSignUp = styled.div`
     background: gold;
   }
 `;
+export const HeaderLoginDiv = styled.div`
+  display: flex;
+  font-weight: bold;
+  font-size: 1.1rem;
+
+  margin-right: 5px;
+  margin-top: 5px;
+`;
+export const ProfileDiv = styled(HeaderLoginDiv)`
+  color: black;
+`;
+export const UserNameDiv = styled(HeaderLoginDiv)`
+  color: #3636e1;
+  cursor: pointer;
+`;
+export const Logout = styled(HeaderLoginDiv)`
+  color: black;
+  cursor: pointer;
+`;
 
 export const Div = styled.div`
   @keyframes float {

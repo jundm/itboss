@@ -40,6 +40,12 @@ export const LoginSignUp = styled.div`
     background: gold;
   }
 `;
+export const UserNameDiv = styled.div`
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #3636e1;
+  cursor: pointer;
+`;
 
 export const MenuUl = styled.ul`
   display: flex;

@@ -5,13 +5,14 @@ import {
   MenuLi,
   MenuUl,
   Logo,
-  AuthenticationDiv,
   WidthDiv,
   LoginSignUp,
   Div,
+  UserNameDiv,
 } from "./styles";
 
 interface HeaderProps {
+  isNickname: string;
   setIsOpen: (arg: (isOpen: any) => boolean) => void;
 }
 
@@ -21,6 +22,10 @@ const HeaderSmall = (props: HeaderProps) => {
   };
   const LogoSrc =
     "https://user-images.githubusercontent.com/80582578/144034497-0aec68e3-393e-4b7c-bfc2-1a68fbfaa569.png";
+  if (props.isNickname != null) {
+    localStorage.setItem("Nick", props.isNickname);
+  }
+  const NickName = localStorage.getItem("Nick");
   return (
     <>
       <HeaderOutLineSmall>
@@ -33,9 +38,20 @@ const HeaderSmall = (props: HeaderProps) => {
               <MenuLi>😆소통</MenuLi>
               <MenuLi>🥳뉴스</MenuLi>
             </MenuUl>
-            <Link to="/login">
-              <LoginSignUp>😘로그인</LoginSignUp>
-            </Link>
+            {NickName ? (
+              <>
+                <UserNameDiv>{NickName}</UserNameDiv>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <LoginSignUp>😘로그인</LoginSignUp>
+                </Link>
+                <Link to="/signup">
+                  <LoginSignUp>🥰회원가입</LoginSignUp>
+                </Link>
+              </>
+            )}
           </WidthDiv>
         </Div>
       </HeaderOutLineSmall>
