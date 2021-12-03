@@ -6,14 +6,17 @@ export const LoginDiv = styled.div`
   display: flex;
   justify-content: center;
 `;
-export const LoginForm = styled.div`
+export const LoginForm = styled.form`
   /* background: yellow; */
   width: 400px;
   height: 100%;
   border-radius: 15px;
   /* border: 1px solid; */
 `;
-
+export const LoginError = styled.span`
+  color: red;
+  font-weight: bold;
+`;
 export const UserH2 = styled.h2`
   font-size: 1.3rem;
   font-weight: bold;

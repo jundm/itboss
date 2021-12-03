@@ -38,7 +38,7 @@ function App() {
     });
   }, [isNickname]);
 
-  const isPadding = isOpen ? "50px" : "230px";
+  const isPadding = isOpen ? "60px" : "230px";
   const GlobalBodyCss = styled.div`
     width: 100%;
     margin: 0 auto;

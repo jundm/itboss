@@ -9,45 +9,73 @@ import {
 } from "./styles";
 import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
     setPassword: "",
     displayName: "",
-    photoURL: null,
   });
-  const { email, password, setPassword, displayName, photoURL } = inputs;
+  const { email, password, setPassword, displayName } = inputs;
 
   const onChange = (e: any) => {
     const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
+    if (name === "displayName") {
+      console.log(value.length);
+      setInputs({
+        ...inputs,
+        [name]: value.slice(0, 12),
+      });
+    } else {
+      setInputs({
+        ...inputs,
+        [name]: value,
+      });
+    }
   };
 
   const Register = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (password !== setPassword) {
-      alert("비밀번호가 일치하지 않습니다");
+      Swal.fire({
+        icon: "error",
+        text: "비밀번호가 일치하지 않습니다",
+      });
     } else {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          // console.log("user", user);
           updateProfile(user, {
             displayName: displayName,
-            photoURL: photoURL,
           }).then(() => {
             // console.log("유저 정보가 업데이트 되었습니다");
+            navigate("/");
+            Swal.fire({
+              icon: "success",
+              title: "회원가입이 성공하였습니다🥰",
+              showConfirmButton: false,
+              timer: 1500,
+            });
           });
         })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
+          console.log(errorCode);
+          switch (errorCode) {
+            case "auth/email-already-in-use":
+              Swal.fire({
+                icon: "error",
+                text: `이미 존재하는 메일 입니다`,
+              });
+              break;
+            default:
+              errorCode;
+          }
         });
     }
     setInputs({
@@ -55,7 +83,6 @@ const SignUp = () => {
       password: "",
       setPassword: "",
       displayName: "",
-      photoURL: null,
     });
   };
 
@@ -98,7 +125,7 @@ const SignUp = () => {
             <UserFormInput
               name="displayName"
               type="text"
-              placeholder="닉네임"
+              placeholder="닉네임(0-12자)"
               required
               value={displayName}
               onChange={onChange}
