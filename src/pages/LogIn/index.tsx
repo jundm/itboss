@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword, signOut } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
-import { LoginDiv } from "./styles";
-import { signOutButton } from "@/elements/auth";
+import {
+  LoginDiv,
+  LoginForm,
+  TextDiv,
+  UserFormInput,
+  UserH2,
+  UserSubmitInput,
+} from "./styles";
 
 const Login = () => {
   const [inputs, setInputs] = useState({
@@ -33,32 +39,31 @@ const Login = () => {
   return (
     <>
       <LoginDiv>
-        <h2>로그인</h2>
-        <div>
-          <input
-            name="email"
-            type="email"
-            placeholder="이메일 주소"
-            required
-            value={email}
-            onChange={onChange}
-          />
-        </div>
-        <div>
-          <input
-            name="password"
-            type="password"
-            placeholder="비밀번호"
-            required
-            value={password}
-            onChange={onChange}
-          />
-        </div>
+        <LoginForm>
+          <UserH2>로그인</UserH2>
+          <TextDiv>
+            <UserFormInput
+              name="email"
+              type="email"
+              placeholder="이메일 주소"
+              required
+              value={email}
+              onChange={onChange}
+            />
+          </TextDiv>
+          <TextDiv>
+            <UserFormInput
+              name="password"
+              type="password"
+              placeholder="비밀번호"
+              required
+              value={password}
+              onChange={onChange}
+            />
+          </TextDiv>
 
-        <div>
-          <button onClick={signInButton}>로그인</button>
-          <button onClick={signOutButton}>로그아웃</button>
-        </div>
+          <UserSubmitInput onClick={signInButton} value="로그인" />
+        </LoginForm>
       </LoginDiv>
     </>
   );

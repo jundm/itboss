@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { SignUpDiv, SignUpForm } from "./styles";
+import {
+  SignUpDiv,
+  SignUpForm,
+  TextDiv,
+  UserFormInput,
+  UserH2,
+  UserSubmitInput,
+} from "./styles";
 import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
 
@@ -56,19 +63,19 @@ const SignUp = () => {
     <>
       <SignUpDiv>
         <SignUpForm onSubmit={Register}>
-          <h2>회원가입</h2>
-          <div>
-            <input
+          <UserH2>회원가입</UserH2>
+          <TextDiv>
+            <UserFormInput
               name="email"
               type="email"
-              placeholder="이메일 주소"
+              placeholder="이메일"
               required
               value={email}
               onChange={onChange}
             />
-          </div>
-          <div>
-            <input
+          </TextDiv>
+          <TextDiv>
+            <UserFormInput
               name="password"
               type="password"
               placeholder="비밀번호"
@@ -76,9 +83,9 @@ const SignUp = () => {
               value={password}
               onChange={onChange}
             />
-          </div>
-          <div>
-            <input
+          </TextDiv>
+          <TextDiv>
+            <UserFormInput
               name="setPassword"
               type="Password"
               placeholder="비밀번호 확인"
@@ -86,9 +93,9 @@ const SignUp = () => {
               value={setPassword}
               onChange={onChange}
             />
-          </div>
-          <div>
-            <input
+          </TextDiv>
+          <TextDiv>
+            <UserFormInput
               name="displayName"
               type="text"
               placeholder="닉네임"
@@ -96,11 +103,9 @@ const SignUp = () => {
               value={displayName}
               onChange={onChange}
             />
-          </div>
+          </TextDiv>
 
-          <div>
-            <input type="submit" value="회원가입" />
-          </div>
+          <UserSubmitInput type="submit" value="회원가입" />
         </SignUpForm>
       </SignUpDiv>
     </>

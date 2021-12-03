@@ -47,9 +47,6 @@ const HeaderSmall = (props: HeaderProps) => {
                 <Link to="/login">
                   <LoginSignUp>😘로그인</LoginSignUp>
                 </Link>
-                <Link to="/signup">
-                  <LoginSignUp>🥰회원가입</LoginSignUp>
-                </Link>
               </>
             )}
           </WidthDiv>
