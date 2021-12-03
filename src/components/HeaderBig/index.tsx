@@ -1,5 +1,5 @@
 import { signOutButton } from "@/elements/auth";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   HeaderOutLineBig,
@@ -30,9 +30,9 @@ const HeaderBig = (props: HeaderProps) => {
   const LogoSrc =
     "https://user-images.githubusercontent.com/80582578/144034480-76511228-6aae-49da-ba24-92220954ce41.png";
   if (props.isNickname != "") {
-    localStorage.setItem("Nick", props.isNickname);
+    sessionStorage.setItem("Nick", props.isNickname);
   }
-  const NickName = localStorage.getItem("Nick");
+  const NickName = sessionStorage.getItem("Nick");
   return (
     <>
       <HeaderOutLineBig>

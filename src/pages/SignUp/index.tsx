@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SignUpDiv, SignUpForm } from "./styles";
 import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
@@ -9,7 +9,7 @@ const SignUp = () => {
     password: "",
     setPassword: "",
     displayName: "",
-    photoURL: "",
+    photoURL: null,
   });
   const { email, password, setPassword, displayName, photoURL } = inputs;
 
@@ -48,31 +48,9 @@ const SignUp = () => {
       password: "",
       setPassword: "",
       displayName: "",
-      photoURL: "",
+      photoURL: null,
     });
   };
-
-  // onAuthStateChanged(auth, (userCredential) => {
-  //   if (userCredential) {
-  //     const uid = userCredential.uid;
-  //     console.log(uid, "checkUser유저가 로그인 되었습니다");
-  //     const displayName = userCredential.displayName;
-  //     const email = userCredential.email;
-  //     const photoURL = userCredential.photoURL;
-  //     const emailVerified = userCredential.emailVerified;
-  //     const providerUser = userCredential.providerData;
-
-  //     console.log("displayName", displayName); // null
-  //     // console.log("email", email); // true
-  //     // console.log("photoURL", photoURL); //null
-  //     // console.log("emailVerified", emailVerified); //false
-  //     // console.log("uid", uid); // true
-  //     // console.log("phoneNumber", phoneNumber); // null
-  //     console.log("providerUser", providerUser); // null
-  //   } else {
-  //     console.log("로그인되어있지 않았습니다");
-  //   }
-  // });
 
   return (
     <>
@@ -119,21 +97,11 @@ const SignUp = () => {
               onChange={onChange}
             />
           </div>
-          {/* <div>
-            <input
-              name="photoURL"
-              type="text"
-              placeholder="사진 URL"
-              required
-              value={photoURL}
-              onChange={onChange}
-            />
-          </div> */}
+
           <div>
             <input type="submit" value="회원가입" />
           </div>
         </SignUpForm>
-        {/* <div>{auth}</div> */}
       </SignUpDiv>
     </>
   );

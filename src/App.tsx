@@ -21,7 +21,7 @@ function App() {
   const dispatch = useDispatch();
   const checkUser = useSelector(loginUser);
 
-  const [isOpen, setIsOpen] = useState(false); // 하위에서 클릭 정보 받아오기
+  const [isOpen, setIsOpen] = useState(false);
   const [isNickname, setIsNickname] = useState("");
 
   useEffect(() => {
@@ -32,11 +32,11 @@ function App() {
         setIsNickname(checkUser.payload.user.user);
       } else {
         console.log("상태:로그아웃");
-        localStorage.setItem("Nick", "");
+        sessionStorage.setItem("Nick", "");
         setIsNickname("");
       }
     });
-  }, [isNickname, dispatch, checkUser]);
+  }, [isNickname]);
 
   const isPadding = isOpen ? "50px" : "230px";
   const GlobalBodyCss = styled.div`
@@ -46,6 +46,8 @@ function App() {
     justify-content: center;
     padding-top: ${isPadding};
   `;
+
+  // console.log("auth.currentUser", auth.currentUser);
 
   return (
     <BrowserRouter>
