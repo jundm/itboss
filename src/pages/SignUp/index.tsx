@@ -69,7 +69,7 @@ const SignUp = () => {
           switch (errorCode) {
             case "auth/email-already-in-use":
               Swal.fire({
-                icon: "error",
+                icon: "warning",
                 text: `이미 존재하는 메일 입니다`,
               });
               break;

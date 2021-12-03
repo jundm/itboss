@@ -47,13 +47,13 @@ const Login = () => {
         switch (errorCode) {
           case "auth/user-not-found":
             Swal.fire({
-              icon: "error",
+              icon: "question",
               text: `유저를 찾을 수 없습니다`,
             });
             break;
           case "auth/wrong-password":
             Swal.fire({
-              icon: "error",
+              icon: "warning",
               text: `비밀번호가 잘못되었습니다`,
             });
             break;
