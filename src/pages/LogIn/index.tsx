@@ -67,6 +67,10 @@ const Login = () => {
             errorCode;
         }
       });
+    setInputs({
+      email: "",
+      password: "",
+    });
   };
 
   return (
