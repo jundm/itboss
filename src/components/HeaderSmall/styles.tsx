@@ -40,11 +40,25 @@ export const LoginSignUp = styled.div`
     background: gold;
   }
 `;
+export const ProfileDiv = styled.div`
+  display: flex;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #ffffff;
+  text-shadow: -0.6px -0.6px 0 #000, 0.6px -0.6px 0 #000, -0.6px 0.6px 0 #000,
+    0.6px 0.6px 0 #000;
+`;
 export const UserNameDiv = styled.div`
   font-weight: bold;
   font-size: 1.1rem;
-  color: #3636e1;
   cursor: pointer;
+  color: #d5e433;
+  margin-right: 0px;
+  text-shadow: -0.2px -0.2px 0 #000, 0.2px -0.2px 0 #000, -0.2px 0.2px 0 #000,
+    0.2px 0.2px 0 #000;
+  :hover {
+    background-color: #3a3a8ac7;
+  }
 `;
 
 export const MenuUl = styled.ul`

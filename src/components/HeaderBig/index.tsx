@@ -19,7 +19,7 @@ import {
 } from "./styles";
 
 interface HeaderProps {
-  isNickname: string;
+  isNickname: any;
   setIsOpen: (arg: (isOpen: any) => boolean) => void;
 }
 
@@ -33,6 +33,7 @@ const HeaderBig = (props: HeaderProps) => {
     sessionStorage.setItem("Nick", props.isNickname);
   }
   const NickName = sessionStorage.getItem("Nick");
+
   return (
     <>
       <HeaderOutLineBig>
@@ -41,9 +42,11 @@ const HeaderBig = (props: HeaderProps) => {
             {NickName ? (
               <>
                 <HeaderLoginDiv>
-                  <ProfileDiv>프사</ProfileDiv>
-                  <UserNameDiv>{NickName}</UserNameDiv>
-                  <Logout onClick={signOutButton}>로그아웃</Logout>
+                  <Link to="/user">
+                    <UserNameDiv>{NickName}</UserNameDiv>
+                  </Link>
+                  <ProfileDiv>님😍</ProfileDiv>
+                  <Logout onClick={signOutButton}>로갓</Logout>
                 </HeaderLoginDiv>
               </>
             ) : (

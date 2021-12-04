@@ -1,5 +1,5 @@
 // 라이브러리
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
@@ -16,6 +16,7 @@ import { loginUser } from "./utils/Toolkit/Slice/userSlice";
 const Main = loadable(() => import("@/layouts/Main"));
 const LogIn = loadable(() => import("@/pages/LogIn"));
 const SignUp = loadable(() => import("@/pages/SignUp"));
+const UserInfo = loadable(() => import("@/pages/UserInfo"));
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +24,6 @@ function App() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isNickname, setIsNickname] = useState("");
-
   useEffect(() => {
     onAuthStateChanged(auth, (userCredential) => {
       if (userCredential) {
@@ -36,8 +36,7 @@ function App() {
         setIsNickname("");
       }
     });
-  }, [isNickname]);
-
+  }, [isNickname, isOpen]);
   const isPadding = isOpen ? "60px" : "230px";
   const GlobalBodyCss = styled.div`
     width: 100%;
@@ -46,9 +45,6 @@ function App() {
     justify-content: center;
     padding-top: ${isPadding};
   `;
-
-  // console.log("auth.currentUser", auth.currentUser);
-
   return (
     <BrowserRouter>
       <div className="App">
@@ -62,6 +58,7 @@ function App() {
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/user" element={<UserInfo />} />
           </Routes>
         </GlobalBodyCss>
       </div>

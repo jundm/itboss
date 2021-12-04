@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   SignUpDiv,
   SignUpForm,
@@ -12,7 +12,9 @@ import { auth } from "@/utils/Firebase/firebaseConfig";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
-const SignUp = () => {
+interface SignUpProps {}
+
+const SignUp = (setIsNickname: any) => {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: "",
@@ -22,21 +24,23 @@ const SignUp = () => {
   });
   const { email, password, setPassword, displayName } = inputs;
 
-  const onChange = (e: any) => {
-    const { name, value } = e.target;
-    if (name === "displayName") {
-      console.log(value.length);
-      setInputs({
-        ...inputs,
-        [name]: value.slice(0, 12),
-      });
-    } else {
-      setInputs({
-        ...inputs,
-        [name]: value,
-      });
-    }
-  };
+  const onChange = useCallback(
+    (e: any) => {
+      const { name, value } = e.target;
+      if (name === "displayName") {
+        setInputs({
+          ...inputs,
+          [name]: value.slice(0, 12),
+        });
+      } else {
+        setInputs({
+          ...inputs,
+          [name]: value,
+        });
+      }
+    },
+    [inputs]
+  );
 
   const Register = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -53,7 +57,6 @@ const SignUp = () => {
           updateProfile(user, {
             displayName: displayName,
           }).then(() => {
-            // console.log("유저 정보가 업데이트 되었습니다");
             navigate("/");
             Swal.fire({
               icon: "success",
@@ -78,7 +81,7 @@ const SignUp = () => {
           }
         });
     }
-    setInputs({
+      setInputs({
       email: "",
       password: "",
       setPassword: "",

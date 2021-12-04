@@ -44,15 +44,26 @@ export const HeaderLoginDiv = styled.div`
   margin-top: 5px;
 `;
 export const ProfileDiv = styled(HeaderLoginDiv)`
-  color: black;
+  color: #ffffff;
+  text-shadow: -0.6px -0.6px 0 #000, 0.6px -0.6px 0 #000, -0.6px 0.6px 0 #000,
+    0.6px 0.6px 0 #000;
 `;
 export const UserNameDiv = styled(HeaderLoginDiv)`
-  color: #3636e1;
+  color: #d5e433;
   cursor: pointer;
+  margin-right: 0px;
+  text-shadow: -0.2px -0.2px 0 #000, 0.2px -0.2px 0 #000, -0.2px 0.2px 0 #000,
+    0.2px 0.2px 0 #000;
+  :hover {
+    background-color: #3a3a8ac7;
+  }
 `;
 export const Logout = styled(HeaderLoginDiv)`
-  color: black;
+  color: #00000065;
   cursor: pointer;
+  :hover {
+    color: #00000021;
+  }
 `;
 
 export const Div = styled.div`

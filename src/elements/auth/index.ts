@@ -16,3 +16,6 @@ export const signOutButton = () => {
       // console.log("error", error);
     });
 };
+export const testModule = (e: any) => {
+  console.log(e);
+};

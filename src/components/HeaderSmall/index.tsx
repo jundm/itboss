@@ -9,6 +9,7 @@ import {
   LoginSignUp,
   Div,
   UserNameDiv,
+  ProfileDiv,
 } from "./styles";
 
 interface HeaderProps {
@@ -40,7 +41,10 @@ const HeaderSmall = (props: HeaderProps) => {
             </MenuUl>
             {NickName ? (
               <>
-                <UserNameDiv>{NickName}</UserNameDiv>
+                <Link to="/user">
+                  <UserNameDiv>{NickName}</UserNameDiv>
+                </Link>
+                <ProfileDiv>님😍</ProfileDiv>
               </>
             ) : (
               <>
