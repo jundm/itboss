@@ -32,7 +32,6 @@ export const UserFormInput = styled.input`
   height: 25px;
   background: none;
 `;
-
 export const UserSubmitInput = styled.input`
   width: 80%;
   height: 40px;

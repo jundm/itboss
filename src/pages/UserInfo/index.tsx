@@ -7,23 +7,26 @@ import {
   UserH2,
   UserSubmitInput,
 } from "./styles";
-import { useNavigate } from "react-router";
-import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
+import { updatePassword, updateProfile, User } from "@firebase/auth";
 import Swal from "sweetalert2";
 import { auth } from "@/utils/Firebase/firebaseConfig";
 import { useSelector } from "react-redux";
-import { loginUser } from "@/utils/Toolkit/Slice/userSlice";
+import { loginEmail, loginUser } from "@/utils/Toolkit/Slice/userSlice";
+import { useNavigate } from "react-router";
 
 const userInfo = () => {
-  const navigate = useNavigate();
-  const UserDisplayName = useSelector(loginUser);
-  // const userEmailValue = useSelector(userEmail);
-  // console.log("info", userDisplayName);
+  const history = useNavigate();
+  const user = auth.currentUser;
+  const userEmail = useSelector(loginEmail);
+  const userEmailValue = userEmail.payload.user.email;
+  const userNickname = useSelector(loginUser);
+  const userNicknameValue = userNickname.payload.user.user;
+
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
     setPassword: "",
-    displayName: "",
+    displayName: `${userNicknameValue}`,
   });
   const { email, password, setPassword, displayName } = inputs;
   const onChange = useCallback(
@@ -43,8 +46,7 @@ const userInfo = () => {
     },
     [inputs]
   );
-
-  const Register = (e: { preventDefault: () => void }) => {
+  const UserUpdate = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (password !== setPassword) {
@@ -53,57 +55,69 @@ const userInfo = () => {
         text: "비밀번호가 일치하지 않습니다",
       });
     } else {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          updateProfile(user, {
-            displayName: displayName,
-          }).then(() => {
-            navigate("/");
+      if (user) {
+        updateProfile(user, {
+          displayName: displayName,
+        })
+          .then(() => {
+            console.log("닉네임 수정완료");
+
+            updatePassword(user, password)
+              .then(() => {
+                console.log("비밀번호 수정완료");
+
+                Swal.fire({
+                  icon: "success",
+                  title: "회원정보가 수정되었습니다🥰",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                history("/");
+              })
+              .catch((e) => {
+                console.log("비밀번호 에러", e);
+                Swal.fire({
+                  icon: "error",
+                  title: `${e}😡`,
+                  showConfirmButton: true,
+                });
+              });
+          })
+          .catch((e) => {
+            console.log("닉네임 오류", e);
             Swal.fire({
-              icon: "success",
-              title: "회원가입이 성공하였습니다🥰",
-              showConfirmButton: false,
-              timer: 1500,
+              icon: "error",
+              title: `${e}😡`,
+              showConfirmButton: true,
             });
           });
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          console.log(errorCode);
-          switch (errorCode) {
-            case "auth/email-already-in-use":
-              Swal.fire({
-                icon: "warning",
-                text: `이미 존재하는 메일 입니다`,
-              });
-              break;
-            default:
-              errorCode;
-          }
-        });
+      }
+      setInputs({
+        email: "",
+        password: "",
+        setPassword: "",
+        displayName: `${userNicknameValue}`,
+      });
     }
-    setInputs({
-      email: "",
-      password: "",
-      setPassword: "",
-      displayName: "",
-    });
   };
   return (
     <>
       <SignUpDiv>
-        <SignUpForm onSubmit={Register}>
+        <SignUpForm onSubmit={UserUpdate}>
           <UserH2>내 정보</UserH2>
           <TextDiv>
-            {/* <UserFormInput name="email" type="email"  value={email} /> */}
+            <UserFormInput
+              name="email"
+              type="email"
+              value={userEmailValue}
+              disabled
+            />
           </TextDiv>
           <TextDiv>
             <UserFormInput
               name="password"
               type="password"
               placeholder="비밀번호"
-              required
               value={password}
               onChange={onChange}
             />
@@ -113,7 +127,6 @@ const userInfo = () => {
               name="setPassword"
               type="Password"
               placeholder="비밀번호 확인"
-              required
               value={setPassword}
               onChange={onChange}
             />

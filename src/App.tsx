@@ -24,12 +24,10 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [isNickname, setIsNickname] = useState("");
 
-  console.log("checkUser1", checkUser.payload.user);
-
   useEffect(() => {
     onAuthStateChanged(auth, (userCredential) => {
       if (userCredential) {
-        console.log("상태:로그인", userCredential);
+        console.log("상태:로그인");
         dispatch(loginUser(userCredential.displayName));
         dispatch(loginEmail(userCredential.email));
 
@@ -43,9 +41,7 @@ function App() {
   }, [checkUser]);
   useEffect(() => {
     const isOpen = localStorage.getItem("toogle");
-    // console.log("isOpen", isOpen);
     if (isOpen) {
-      // console.log(isOpen);
       setIsOpen(JSON.parse(isOpen));
     }
   }, [isOpen]);
