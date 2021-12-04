@@ -1,6 +1,7 @@
 import { signOutButton } from "@/elements/auth";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 import {
   HeaderOutLineBig,
   MenuLi,
@@ -25,6 +26,7 @@ interface HeaderProps {
 }
 
 const HeaderBig = (props: HeaderProps) => {
+  const history = useNavigate();
   const toggleHeader = () => {
     props.setIsOpen((isOpen) => !isOpen);
     props.saveLocalStorage();
@@ -48,7 +50,7 @@ const HeaderBig = (props: HeaderProps) => {
                     <UserNameDiv>{NickName}</UserNameDiv>
                   </Link>
                   <ProfileDiv>님😍</ProfileDiv>
-                  <Logout onClick={signOutButton}>로갓</Logout>
+                  <Logout onClick={signOutButton}>logout</Logout>
                 </HeaderLoginDiv>
               </>
             ) : (
@@ -64,7 +66,9 @@ const HeaderBig = (props: HeaderProps) => {
           </AuthenticationDiv>
         </WidthDiv>
         <Div>
-          <Logo src={LogoSrc} />
+          <Link to="/">
+            <Logo src={LogoSrc} />
+          </Link>
           <FaceDiv onClick={toggleHeader} />
           <FaceMessageDiv>👈 응슷곰을 누르면 메뉴가 접혀요! </FaceMessageDiv>
         </Div>

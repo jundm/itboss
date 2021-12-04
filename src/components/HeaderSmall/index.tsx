@@ -44,7 +44,7 @@ const HeaderSmall = (props: HeaderProps) => {
             {NickName ? (
               <>
                 <Link to="/user">
-                  <UserNameDiv>{NickName}</UserNameDiv>
+                  <UserNameDiv>{NickName.slice(0, 2)}</UserNameDiv>
                 </Link>
                 <ProfileDiv>님😍</ProfileDiv>
               </>

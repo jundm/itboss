@@ -89,6 +89,7 @@ export const FaceDiv = styled.div`
   width: 40px;
   height: 40px;
 `;
+
 export const FaceMessageDiv = styled(FaceDiv)`
   display: hidden;
   transform: translate(70px, -110px);
