@@ -12,13 +12,13 @@ import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
 import Swal from "sweetalert2";
 import { auth } from "@/utils/Firebase/firebaseConfig";
 import { useSelector } from "react-redux";
-import { userInfo } from "@/utils/Toolkit/Slice/userSlice";
+import { loginUser } from "@/utils/Toolkit/Slice/userSlice";
 
-const UserInfo = () => {
+const userInfo = () => {
   const navigate = useNavigate();
-  const UserInfo = useSelector(userInfo);
+  const UserDisplayName = useSelector(loginUser);
   // const userEmailValue = useSelector(userEmail);
-  // console.log("info", userInfo);
+  // console.log("info", userDisplayName);
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -136,4 +136,4 @@ const UserInfo = () => {
   );
 };
 
-export default UserInfo;
+export default userInfo;

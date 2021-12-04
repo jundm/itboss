@@ -19,7 +19,7 @@ import {
 } from "./styles";
 
 interface HeaderProps {
-  isNickname: any;
+  isNickname: string;
   saveLocalStorage: () => void;
   setIsOpen: (arg: (isOpen: any) => boolean) => void;
 }

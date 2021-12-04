@@ -5,22 +5,22 @@ import {
 } from "@reduxjs/toolkit";
 
 interface AuthState {
-  user?: string;
+  user: string;
   email?: string;
 }
 const initialState: AuthState = {
-  user: undefined,
-  email: undefined,
+  user: "",
+  email: "",
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    userInfo: (state, { payload }) => {
+    loginUser: (state, { payload }) => {
       state.user = payload;
     },
   },
 });
-export const { userInfo } = userSlice.actions;
+export const { loginUser } = userSlice.actions;
 export default userSlice.reducer;

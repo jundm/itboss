@@ -1,5 +1,5 @@
 // 라이브러리
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
@@ -9,8 +9,8 @@ import { onAuthStateChanged } from "@firebase/auth";
 import "./App.css";
 import HeaderBig from "@/components/HeaderBig";
 import HeaderSmall from "@/components/HeaderSmall";
-import { auth } from "./utils/Firebase/firebaseConfig";
-import { userInfo } from "./utils/Toolkit/Slice/userSlice";
+import { auth } from "@/utils/Firebase/firebaseConfig";
+import { loginUser } from "@/utils/Toolkit/Slice/userSlice";
 
 // 페이지(코드 스플리팅 (페이지 단위로 하는게 좋다))
 const Main = loadable(() => import("@/layouts/Main"));
@@ -20,17 +20,31 @@ const UserInfo = loadable(() => import("@/pages/UserInfo"));
 
 function App() {
   const dispatch = useDispatch();
-  const checkUser = useSelector(userInfo);
+  const checkUser = useSelector(loginUser);
   const [isOpen, setIsOpen] = useState(false);
   const [isNickname, setIsNickname] = useState("");
 
-  // console.log("checkUser", checkUser);
-  console.log("checkUser", checkUser?.payload?.user?.user?.user);
+  console.log("checkUser1", checkUser.payload.user.user);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (userCredential) => {
+      if (userCredential) {
+        console.log("상태:로그인", userCredential);
+        dispatch(loginUser(userCredential.displayName));
+        setIsNickname(checkUser.payload.user.user);
+        // console.log("checkUser", checkUser);
+      } else {
+        console.log("상태:로그아웃");
+        sessionStorage.setItem("Nick", "");
+        setIsNickname("");
+      }
+    });
+  }, [isNickname, checkUser]);
   useEffect(() => {
     const isOpen = localStorage.getItem("toogle");
     // console.log("isOpen", isOpen);
     if (isOpen) {
-      console.log(isOpen);
+      // console.log(isOpen);
       setIsOpen(JSON.parse(isOpen));
     }
   }, [isOpen]);
@@ -39,25 +53,6 @@ function App() {
     localStorage.setItem("toogle", JSON.stringify(!isOpen));
   };
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (userCredential) => {
-      if (userCredential) {
-        console.log("상태:로그인", userCredential);
-        dispatch(
-          userInfo({
-            user: userCredential.displayName,
-            email: userCredential.email,
-          })
-        );
-        setIsNickname(checkUser?.payload?.user?.user?.user);
-        console.log("checkUser", checkUser.payload.user.user.user);
-      } else {
-        console.log("상태:로그아웃");
-        sessionStorage.setItem("Nick", "");
-        setIsNickname("");
-      }
-    });
-  }, []);
   const isPadding = isOpen ? "60px" : "230px";
   const GlobalBodyCss = styled.div`
     width: 100%;
