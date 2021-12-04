@@ -20,7 +20,10 @@ export const userSlice = createSlice({
     loginUser: (state, { payload }) => {
       state.user = payload;
     },
+    loginEmail: (state, { payload }) => {
+      state.email = payload;
+    },
   },
 });
-export const { loginUser } = userSlice.actions;
+export const { loginUser, loginEmail } = userSlice.actions;
 export default userSlice.reducer;

@@ -10,7 +10,7 @@ import "./App.css";
 import HeaderBig from "@/components/HeaderBig";
 import HeaderSmall from "@/components/HeaderSmall";
 import { auth } from "@/utils/Firebase/firebaseConfig";
-import { loginUser } from "@/utils/Toolkit/Slice/userSlice";
+import { loginEmail, loginUser } from "@/utils/Toolkit/Slice/userSlice";
 
 // 페이지(코드 스플리팅 (페이지 단위로 하는게 좋다))
 const Main = loadable(() => import("@/layouts/Main"));
@@ -24,22 +24,23 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [isNickname, setIsNickname] = useState("");
 
-  console.log("checkUser1", checkUser.payload.user.user);
+  console.log("checkUser1", checkUser.payload.user);
 
   useEffect(() => {
     onAuthStateChanged(auth, (userCredential) => {
       if (userCredential) {
         console.log("상태:로그인", userCredential);
         dispatch(loginUser(userCredential.displayName));
+        dispatch(loginEmail(userCredential.email));
+
         setIsNickname(checkUser.payload.user.user);
-        // console.log("checkUser", checkUser);
       } else {
         console.log("상태:로그아웃");
         sessionStorage.setItem("Nick", "");
         setIsNickname("");
       }
     });
-  }, [isNickname, checkUser]);
+  }, [checkUser]);
   useEffect(() => {
     const isOpen = localStorage.getItem("toogle");
     // console.log("isOpen", isOpen);
