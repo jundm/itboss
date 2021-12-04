@@ -10,7 +10,7 @@ import "./App.css";
 import HeaderBig from "@/components/HeaderBig";
 import HeaderSmall from "@/components/HeaderSmall";
 import { auth } from "./utils/Firebase/firebaseConfig";
-import { loginUser } from "./utils/Toolkit/Slice/userSlice";
+import { userInfo } from "./utils/Toolkit/Slice/userSlice";
 
 // 페이지(코드 스플리팅 (페이지 단위로 하는게 좋다))
 const Main = loadable(() => import("@/layouts/Main"));
@@ -20,23 +20,44 @@ const UserInfo = loadable(() => import("@/pages/UserInfo"));
 
 function App() {
   const dispatch = useDispatch();
-  const checkUser = useSelector(loginUser);
-
+  const checkUser = useSelector(userInfo);
   const [isOpen, setIsOpen] = useState(false);
   const [isNickname, setIsNickname] = useState("");
+
+  // console.log("checkUser", checkUser);
+  console.log("checkUser", checkUser?.payload?.user?.user?.user);
+  useEffect(() => {
+    const isOpen = localStorage.getItem("toogle");
+    // console.log("isOpen", isOpen);
+    if (isOpen) {
+      console.log(isOpen);
+      setIsOpen(JSON.parse(isOpen));
+    }
+  }, [isOpen]);
+
+  const saveLocalStorage = () => {
+    localStorage.setItem("toogle", JSON.stringify(!isOpen));
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (userCredential) => {
       if (userCredential) {
-        console.log("상태:로그인");
-        dispatch(loginUser(userCredential.displayName));
-        setIsNickname(checkUser.payload.user.user);
+        console.log("상태:로그인", userCredential);
+        dispatch(
+          userInfo({
+            user: userCredential.displayName,
+            email: userCredential.email,
+          })
+        );
+        setIsNickname(checkUser?.payload?.user?.user?.user);
+        console.log("checkUser", checkUser.payload.user.user.user);
       } else {
         console.log("상태:로그아웃");
         sessionStorage.setItem("Nick", "");
         setIsNickname("");
       }
     });
-  }, [isNickname, isOpen]);
+  }, []);
   const isPadding = isOpen ? "60px" : "230px";
   const GlobalBodyCss = styled.div`
     width: 100%;
@@ -49,9 +70,17 @@ function App() {
     <BrowserRouter>
       <div className="App">
         {isOpen ? (
-          <HeaderSmall setIsOpen={setIsOpen} isNickname={isNickname} />
+          <HeaderSmall
+            saveLocalStorage={saveLocalStorage}
+            setIsOpen={setIsOpen}
+            isNickname={isNickname}
+          />
         ) : (
-          <HeaderBig setIsOpen={setIsOpen} isNickname={isNickname} />
+          <HeaderBig
+            saveLocalStorage={saveLocalStorage}
+            setIsOpen={setIsOpen}
+            isNickname={isNickname}
+          />
         )}
         <GlobalBodyCss>
           <Routes>

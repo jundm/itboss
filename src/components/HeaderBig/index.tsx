@@ -20,12 +20,14 @@ import {
 
 interface HeaderProps {
   isNickname: any;
+  saveLocalStorage: () => void;
   setIsOpen: (arg: (isOpen: any) => boolean) => void;
 }
 
 const HeaderBig = (props: HeaderProps) => {
   const toggleHeader = () => {
     props.setIsOpen((isOpen) => !isOpen);
+    props.saveLocalStorage();
   };
   const LogoSrc =
     "https://user-images.githubusercontent.com/80582578/144034480-76511228-6aae-49da-ba24-92220954ce41.png";
