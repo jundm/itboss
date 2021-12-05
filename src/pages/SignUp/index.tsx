@@ -9,7 +9,7 @@ import {
 } from "./styles";
 import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
-import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
 interface SignUpProps {}
@@ -46,10 +46,7 @@ const SignUp = (setIsNickname: any) => {
     e.preventDefault();
 
     if (password !== setPassword) {
-      Swal.fire({
-        icon: "error",
-        text: "비밀번호가 일치하지 않습니다",
-      });
+      toast.error("비밀번호가 일치하지 않습니다.", { icon: "👀" });
     } else {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -58,30 +55,24 @@ const SignUp = (setIsNickname: any) => {
             displayName: displayName,
           }).then(() => {
             navigate("/");
-            Swal.fire({
-              icon: "success",
-              title: "회원가입이 성공하였습니다🥰",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            toast.success("회원가입이 성공하였습니다", { icon: "👏" });
           });
         })
         .catch((error) => {
           const errorCode = error.code;
-          console.log(errorCode);
           switch (errorCode) {
             case "auth/email-already-in-use":
-              Swal.fire({
-                icon: "warning",
-                text: `이미 존재하는 메일 입니다`,
-              });
+              toast.error("이미 존재하는 메일 입니다.", { icon: "😂" });
               break;
             default:
-              errorCode;
+              toast.error(
+                `${errorCode} 오류 메세지를 관리자에게 알려주세요! Email:bnmva23@hanmail.net`,
+                { icon: "😂", duration: 10000 }
+              );
           }
         });
     }
-      setInputs({
+    setInputs({
       email: "",
       password: "",
       setPassword: "",

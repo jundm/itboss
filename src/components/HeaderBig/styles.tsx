@@ -25,14 +25,18 @@ export const AuthenticationDiv = styled.div`
   z-index: 20;
 `;
 export const LoginSignUp = styled.div`
-  margin-right: 10px;
-  margin-top: 10px;
-  color: #3636e1;
+  z-index: 21;
+  padding: 10px;
+  text-align: center;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  color: #d1e834;
+  /* -webkit-text-stroke: 0.5px #000000; */
+  text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000,
+    0.5px 0.5px 0 #000;
   cursor: pointer;
   :hover {
-    background: gold;
+    background-color: #3a3a8ac7;
   }
 `;
 export const HeaderLoginDiv = styled.div`

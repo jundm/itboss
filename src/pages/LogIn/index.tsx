@@ -3,7 +3,6 @@ import { signInWithEmailAndPassword, signOut } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
 import {
   LoginDiv,
-  LoginError,
   LoginForm,
   TextDiv,
   UserFormInput,
@@ -11,7 +10,7 @@ import {
   UserSubmitInput,
 } from "./styles";
 import { useNavigate } from "react-router";
-import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,34 +33,20 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         navigate("/");
-        Swal.fire({
-          icon: "success",
-          title: "로그인 되었습니다🥰",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        toast.success("로그인 되었습니다🥰");
       })
       .catch((error) => {
         const errorCode = error.code;
         console.log(errorCode);
         switch (errorCode) {
           case "auth/user-not-found":
-            Swal.fire({
-              icon: "question",
-              text: `유저를 찾을 수 없습니다`,
-            });
+            toast.error("유저를 찾을 수 없습니다", { icon: "😂" });
             break;
           case "auth/wrong-password":
-            Swal.fire({
-              icon: "warning",
-              text: `비밀번호가 잘못되었습니다`,
-            });
+            toast.error("비밀번호가 잘못되었습니다", { icon: "😂" });
             break;
           case "auth/too-many-requests":
-            Swal.fire({
-              icon: "error",
-              text: `요청을 너무 많이 보냈습니다`,
-            });
+            toast.error("요청을 너무 많이 보냈습니다", { icon: "😂" });
             break;
           default:
             errorCode;

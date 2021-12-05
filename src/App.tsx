@@ -17,6 +17,8 @@ const Main = loadable(() => import("@/layouts/Main"));
 const LogIn = loadable(() => import("@/pages/LogIn"));
 const SignUp = loadable(() => import("@/pages/SignUp"));
 const UserInfo = loadable(() => import("@/pages/UserInfo"));
+import { Toaster } from "react-hot-toast";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,7 +52,7 @@ function App() {
     localStorage.setItem("toogle", JSON.stringify(!isOpen));
   };
 
-  const isPadding = isOpen ? "60px" : "230px";
+  const isPadding = isOpen ? "60px" : "240px";
   const GlobalBodyCss = styled.div`
     width: 100%;
     margin: 0 auto;
@@ -74,12 +76,14 @@ function App() {
             isNickname={isNickname}
           />
         )}
+        <Toaster position="top-right" />
         <GlobalBodyCss>
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/user" element={<UserInfo />} />
+            <Route path="/*" element={<NotFound />} />
           </Routes>
         </GlobalBodyCss>
       </div>

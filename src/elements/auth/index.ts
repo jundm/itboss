@@ -1,21 +1,13 @@
 import { auth } from "@/utils/Firebase/firebaseConfig";
-import { signInWithEmailAndPassword, signOut } from "@firebase/auth";
-import Swal from "sweetalert2";
+import { signOut } from "@firebase/auth";
+import toast from "react-hot-toast";
 
 export const signOutButton = () => {
   signOut(auth)
     .then(() => {
-      Swal.fire({
-        icon: "success",
-        title: "로그아웃 완료😎",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      toast.success("로그아웃 완료😎");
     })
     .catch((error) => {
       // console.log("error", error);
     });
-};
-export const testModule = (e: any) => {
-  console.log(e);
 };

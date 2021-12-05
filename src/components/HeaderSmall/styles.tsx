@@ -32,7 +32,7 @@ export const AuthenticationDiv = styled.div`
 `;
 export const LoginSignUp = styled.div`
   margin-right: 10px;
-  color: #3636e1;
+  color: #c9ed18;
   font-weight: bold;
   font-size: 1rem;
   cursor: pointer;

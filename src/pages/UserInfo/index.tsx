@@ -8,14 +8,14 @@ import {
   UserSubmitInput,
 } from "./styles";
 import { updatePassword, updateProfile, User } from "@firebase/auth";
-import Swal from "sweetalert2";
 import { auth } from "@/utils/Firebase/firebaseConfig";
 import { useSelector } from "react-redux";
 import { loginEmail, loginUser } from "@/utils/Toolkit/Slice/userSlice";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 const userInfo = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const user = auth.currentUser;
   const userEmail = useSelector(loginEmail);
   const userEmailValue = userEmail.payload.user.email;
@@ -50,46 +50,24 @@ const userInfo = () => {
     e.preventDefault();
 
     if (password !== setPassword) {
-      Swal.fire({
-        icon: "error",
-        text: "비밀번호가 일치하지 않습니다",
-      });
+      toast.error("비밀번호가 일치하지 않습니다.", { icon: "👀" });
     } else {
       if (user) {
         updateProfile(user, {
           displayName: displayName,
         })
           .then(() => {
-            console.log("닉네임 수정완료");
-
             updatePassword(user, password)
               .then(() => {
-                console.log("비밀번호 수정완료");
-
-                Swal.fire({
-                  icon: "success",
-                  title: "회원정보가 수정되었습니다🥰",
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-                history("/");
+                toast.success("회원가입이 성공하였습니다", { icon: "👏" });
+                navigate("/");
               })
               .catch((e) => {
-                console.log("비밀번호 에러", e);
-                Swal.fire({
-                  icon: "error",
-                  title: `${e}😡`,
-                  showConfirmButton: true,
-                });
+                toast.error(`비밀번호 오류,${e}`, { icon: "😂" });
               });
           })
           .catch((e) => {
-            console.log("닉네임 오류", e);
-            Swal.fire({
-              icon: "error",
-              title: `${e}😡`,
-              showConfirmButton: true,
-            });
+            toast.error(`닉네임 오류,${e}`, { icon: "😂" });
           });
       }
       setInputs({

@@ -1,7 +1,3 @@
-import { signOutButton } from "@/elements/auth";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router";
 import {
   HeaderOutLineBig,
   MenuLi,
@@ -18,6 +14,9 @@ import {
   ProfileDiv,
   Logout,
 } from "./styles";
+import { signOutButton } from "@/elements/auth";
+import React from "react";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
   isNickname: string;
@@ -26,7 +25,6 @@ interface HeaderProps {
 }
 
 const HeaderBig = (props: HeaderProps) => {
-  const history = useNavigate();
   const toggleHeader = () => {
     props.setIsOpen((isOpen) => !isOpen);
     props.saveLocalStorage();
