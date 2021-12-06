@@ -7,10 +7,12 @@ import {
 interface AuthState {
   user: string;
   email?: string;
+  uid?: string;
 }
 const initialState: AuthState = {
   user: "",
   email: "",
+  uid: "",
 };
 
 export const userSlice = createSlice({
@@ -23,7 +25,10 @@ export const userSlice = createSlice({
     loginEmail: (state, { payload }) => {
       state.email = payload;
     },
+    loginUid: (state, { payload }) => {
+      state.uid = payload;
+    },
   },
 });
-export const { loginUser, loginEmail } = userSlice.actions;
+export const { loginUser, loginEmail, loginUid } = userSlice.actions;
 export default userSlice.reducer;

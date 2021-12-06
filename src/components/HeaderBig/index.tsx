@@ -17,14 +17,19 @@ import {
 import { signOutButton } from "@/elements/auth";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { loginUid } from "@/utils/Toolkit/Slice/userSlice";
 
 interface HeaderProps {
+  isUid: string;
   isNickname: string;
   saveLocalStorage: () => void;
   setIsOpen: (arg: (isOpen: any) => boolean) => void;
 }
 
 const HeaderBig = (props: HeaderProps) => {
+  const Uid = useSelector(loginUid);
+  const slug = Uid.payload.user.uid;
   const toggleHeader = () => {
     props.setIsOpen((isOpen) => !isOpen);
     props.saveLocalStorage();
@@ -33,6 +38,7 @@ const HeaderBig = (props: HeaderProps) => {
     "https://user-images.githubusercontent.com/80582578/144034480-76511228-6aae-49da-ba24-92220954ce41.png";
   if (props.isNickname != "") {
     sessionStorage.setItem("Nick", props.isNickname);
+    sessionStorage.setItem("UID", props.isUid);
   }
   const NickName = sessionStorage.getItem("Nick");
 
@@ -44,7 +50,7 @@ const HeaderBig = (props: HeaderProps) => {
             {NickName ? (
               <>
                 <HeaderLoginDiv>
-                  <Link to="/user">
+                  <Link to={`/user/${slug}`}>
                     <UserNameDiv>{NickName}</UserNameDiv>
                   </Link>
                   <ProfileDiv>님😍</ProfileDiv>

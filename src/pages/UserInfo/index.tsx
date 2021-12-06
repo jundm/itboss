@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   SignUpDiv,
   SignUpForm,
@@ -10,12 +10,19 @@ import {
 import { updatePassword, updateProfile, User } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
 import { useSelector } from "react-redux";
-import { loginEmail, loginUser } from "@/utils/Toolkit/Slice/userSlice";
-import { useNavigate } from "react-router";
+import {
+  loginEmail,
+  loginUid,
+  loginUser,
+} from "@/utils/Toolkit/Slice/userSlice";
+import { Navigate, useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
 
 const userInfo = () => {
+  const { slug } = useParams();
   const navigate = useNavigate();
+  const Uid = useSelector(loginUid);
+  const userUid = sessionStorage.getItem("UID");
   const user = auth.currentUser;
   const userEmail = useSelector(loginEmail);
   const userEmailValue = userEmail.payload.user.email;
@@ -46,6 +53,7 @@ const userInfo = () => {
     },
     [inputs]
   );
+
   const UserUpdate = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
@@ -59,7 +67,9 @@ const userInfo = () => {
           .then(() => {
             updatePassword(user, password)
               .then(() => {
-                toast.success("회원정보 수정에 성공하였습니다", { icon: "👏" });
+                toast.success("회원정보 수정에 성공하였습니다", {
+                  icon: "👏",
+                });
                 navigate("/");
               })
               .catch((e) => {
@@ -78,6 +88,11 @@ const userInfo = () => {
       });
     }
   };
+  if (userUid === "") {
+    return <Navigate to="/login" />;
+  } else if (slug !== userUid) {
+    return <Navigate to="/404" />;
+  }
   return (
     <>
       <SignUpDiv>
