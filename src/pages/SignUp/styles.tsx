@@ -45,6 +45,7 @@ export const UserSubmitInput = styled.input`
   cursor: pointer;
   transition: 0.4s;
   display: inline;
+  font-size: 1.4rem;
   :hover {
     background-position: right;
   }

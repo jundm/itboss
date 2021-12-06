@@ -1,6 +1,10 @@
 // 라이브러리
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import loadable from "@loadable/component";
@@ -60,6 +64,7 @@ function App() {
     justify-content: center;
     padding-top: ${isPadding};
   `;
+
   return (
     <BrowserRouter>
       <div className="App">

@@ -59,7 +59,7 @@ const userInfo = () => {
           .then(() => {
             updatePassword(user, password)
               .then(() => {
-                toast.success("회원가입이 성공하였습니다", { icon: "👏" });
+                toast.success("회원정보 수정에 성공하였습니다", { icon: "👏" });
                 navigate("/");
               })
               .catch((e) => {

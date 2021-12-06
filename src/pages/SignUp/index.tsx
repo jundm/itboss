@@ -4,7 +4,6 @@ import {
   SignUpForm,
   TextDiv,
   UserFormInput,
-  UserH2,
   UserSubmitInput,
 } from "./styles";
 import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
@@ -84,7 +83,6 @@ const SignUp = (setIsNickname: any) => {
     <>
       <SignUpDiv>
         <SignUpForm onSubmit={Register}>
-          <UserH2>회원가입</UserH2>
           <TextDiv>
             <UserFormInput
               name="email"

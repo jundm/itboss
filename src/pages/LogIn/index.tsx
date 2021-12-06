@@ -6,7 +6,6 @@ import {
   LoginForm,
   TextDiv,
   UserFormInput,
-  UserH2,
   UserSubmitInput,
 } from "./styles";
 import { useNavigate } from "react-router";
@@ -62,7 +61,6 @@ const Login = () => {
     <>
       <LoginDiv>
         <LoginForm onSubmit={SignInButton}>
-          <UserH2>로그인</UserH2>
           <TextDiv>
             <UserFormInput
               name="email"
