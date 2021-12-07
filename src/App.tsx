@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import loadable from "@loadable/component";
+import { Toaster } from "react-hot-toast";
 import { onAuthStateChanged } from "@firebase/auth";
 // 컴포넌트
 import "./App.css";
@@ -15,15 +16,19 @@ import {
   loginUid,
   loginUser,
 } from "@/utils/Toolkit/Slice/userSlice";
+import { RequireAuth } from "./pages/ProtectedPage/index";
 
 // 페이지(코드 스플리팅 (페이지 단위로 하는게 좋다))
 const Main = loadable(() => import("@/layouts/Main"));
 const LogIn = loadable(() => import("@/pages/LogIn"));
 const SignUp = loadable(() => import("@/pages/SignUp"));
 const UserInfo = loadable(() => import("@/pages/UserInfo"));
-import { Toaster } from "react-hot-toast";
-import NotFound from "./pages/NotFound";
-import { RequireAuth } from "./pages/ProtectedPage/index";
+
+const NotFound = loadable(() => import("@/pages/NotFound"));
+const BoardFree = loadable(() => import("@/pages/BoardFree"));
+const BoardNews = loadable(() => import("@/pages/BoardNews"));
+const BoardPopularity = loadable(() => import("@/pages/BoardPopularity"));
+const BoardQuestion = loadable(() => import("@/pages/BoardQuestion"));
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +40,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (userCredential) => {
       if (userCredential) {
+        console.log("상태:로그인");
         const userInfoList = [
           loginUser(userCredential.displayName),
           loginEmail(userCredential.email),
@@ -96,6 +102,10 @@ function App() {
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/popularity" element={<BoardPopularity />} />
+            <Route path="/question" element={<BoardQuestion />} />
+            <Route path="/free" element={<BoardFree />} />
+            <Route path="/news" element={<BoardNews />} />
             <Route element={<RequireAuth />}>
               <Route path="/user/:slug" element={<UserInfo />} />
             </Route>

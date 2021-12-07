@@ -7,7 +7,6 @@ export function RequireAuth() {
   let location = useLocation();
   let auth = useSelector(loginUid);
   let authUser = auth.payload.user.uid;
-  console.log("pro", authUser);
   if (authUser === null) {
     return <Navigate to="/login" state={{ from: location }} />;
   }

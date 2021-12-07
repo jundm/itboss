@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
 export const HeaderOutLineBig = styled.header`
   text-align: center;
@@ -109,8 +110,10 @@ export const MenuUl = styled.ul`
   display: flex;
   justify-content: center;
   text-align: center;
+  z-index: 21;
 `;
 export const MenuLi = styled.li`
+  display: relative;
   z-index: 21;
   padding: 10px;
   text-align: center;
@@ -124,4 +127,8 @@ export const MenuLi = styled.li`
   :hover {
     background-color: #3a3a8ac7;
   }
+`;
+
+export const HeaderLink = styled(Link)`
+  z-index: 21;
 `;

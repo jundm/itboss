@@ -13,6 +13,7 @@ import {
   UserNameDiv,
   ProfileDiv,
   Logout,
+  HeaderLink,
 } from "./styles";
 import { signOutButton } from "@/elements/auth";
 import React from "react";
@@ -77,10 +78,18 @@ const HeaderBig = (props: HeaderProps) => {
           <FaceMessageDiv>👈 응슷곰을 누르면 메뉴가 접혀요! </FaceMessageDiv>
         </Div>
         <MenuUl>
-          <MenuLi>😎인기</MenuLi>
-          <MenuLi>🙈질문</MenuLi>
-          <MenuLi>😆소통</MenuLi>
-          <MenuLi>🥳뉴스</MenuLi>
+          <HeaderLink to="/popularity">
+            <MenuLi>😎인기</MenuLi>
+          </HeaderLink>
+          <HeaderLink to="/question">
+            <MenuLi>🙈질문</MenuLi>
+          </HeaderLink>
+          <HeaderLink to="/free">
+            <MenuLi>😆소통</MenuLi>
+          </HeaderLink>
+          <HeaderLink to="/news">
+            <MenuLi>🥳뉴스</MenuLi>
+          </HeaderLink>
         </MenuUl>
       </HeaderOutLineBig>
     </>

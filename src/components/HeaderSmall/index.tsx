@@ -38,10 +38,18 @@ const HeaderSmall = (props: HeaderProps) => {
           <WidthDiv>
             <Logo src={LogoSrc} onClick={toggleHeader} />
             <MenuUl>
-              <MenuLi>😎인기</MenuLi>
-              <MenuLi>🙈질문</MenuLi>
-              <MenuLi>😆소통</MenuLi>
-              <MenuLi>🥳뉴스</MenuLi>
+              <Link to="/popularity">
+                <MenuLi>😎인기</MenuLi>
+              </Link>
+              <Link to="/question">
+                <MenuLi>🙈질문</MenuLi>
+              </Link>
+              <Link to="/free">
+                <MenuLi>😆소통</MenuLi>
+              </Link>
+              <Link to="/news">
+                <MenuLi>🥳뉴스</MenuLi>
+              </Link>
             </MenuUl>
             {NickName ? (
               <>
