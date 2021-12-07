@@ -20,7 +20,7 @@ const NotFound = () => {
           alt="404"
         />
       </TitleDiv>
-      <TextH2>not found</TextH2>
+      <TextH2>Not Found</TextH2>
       <TextDiv>앗! 죄송합니다!</TextDiv>
       <TextDiv>페이지를 준비하지 못했습니다</TextDiv>
     </>

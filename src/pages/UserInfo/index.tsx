@@ -83,9 +83,7 @@ const userInfo = () => {
       });
     }
   };
-  if (userUid === "") {
-    return <Navigate to="/login" />;
-  } else if (slug !== userUid) {
+  if (slug !== userUid) {
     return <Navigate to="/404" />;
   }
   return (

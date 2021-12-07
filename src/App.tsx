@@ -16,19 +16,19 @@ import {
   loginUid,
   loginUser,
 } from "@/utils/Toolkit/Slice/userSlice";
-import { RequireAuth } from "./pages/ProtectedPage/index";
+import { AlreadyAuth, RequireAuth } from "./pages/ProtectedPage/index";
 
 // 페이지(코드 스플리팅 (페이지 단위로 하는게 좋다))
 const Main = loadable(() => import("@/layouts/Main"));
 const LogIn = loadable(() => import("@/pages/LogIn"));
 const SignUp = loadable(() => import("@/pages/SignUp"));
 const UserInfo = loadable(() => import("@/pages/UserInfo"));
-
 const NotFound = loadable(() => import("@/pages/NotFound"));
 const BoardFree = loadable(() => import("@/pages/BoardFree"));
 const BoardNews = loadable(() => import("@/pages/BoardNews"));
 const BoardPopularity = loadable(() => import("@/pages/BoardPopularity"));
 const BoardQuestion = loadable(() => import("@/pages/BoardQuestion"));
+const PostCreate = loadable(() => import("@/pages/PostCreate"));
 
 function App() {
   const dispatch = useDispatch();
@@ -100,14 +100,17 @@ function App() {
         <GlobalBodyCss>
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="/login" element={<LogIn />} />
-            <Route path="/signup" element={<SignUp />} />
+            <Route element={<AlreadyAuth />}>
+              <Route path="/login" element={<LogIn />} />
+              <Route path="/signup" element={<SignUp />} />
+            </Route>
             <Route path="/popularity" element={<BoardPopularity />} />
             <Route path="/question" element={<BoardQuestion />} />
             <Route path="/free" element={<BoardFree />} />
             <Route path="/news" element={<BoardNews />} />
             <Route element={<RequireAuth />}>
               <Route path="/user/:slug" element={<UserInfo />} />
+              <Route path="/create" element={<PostCreate />} />
             </Route>
             <Route path="/*" element={<NotFound />} />
           </Routes>
