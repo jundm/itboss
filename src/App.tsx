@@ -10,13 +10,15 @@ import { onAuthStateChanged } from "@firebase/auth";
 import "./App.css";
 import HeaderBig from "@/components/HeaderBig";
 import HeaderSmall from "@/components/HeaderSmall";
-import { auth } from "@/utils/Firebase/firebaseConfig";
+import { auth, db } from "@/utils/Firebase/firebaseConfig";
 import {
   loginEmail,
   loginUid,
   loginUser,
 } from "@/utils/Toolkit/Slice/userSlice";
 import { AlreadyAuth, RequireAuth } from "./pages/ProtectedPage/index";
+import { collection } from "@firebase/firestore";
+import PostCreate from "./pages/PostCreate";
 
 // 페이지(코드 스플리팅 (페이지 단위로 하는게 좋다))
 const Main = loadable(() => import("@/layouts/Main"));
@@ -28,7 +30,7 @@ const BoardFree = loadable(() => import("@/pages/BoardFree"));
 const BoardNews = loadable(() => import("@/pages/BoardNews"));
 const BoardPopularity = loadable(() => import("@/pages/BoardPopularity"));
 const BoardQuestion = loadable(() => import("@/pages/BoardQuestion"));
-const PostCreate = loadable(() => import("@/pages/PostCreate"));
+// const PostCreate = loadable(() => import("@/pages/PostCreate"));
 
 function App() {
   const dispatch = useDispatch();
@@ -40,7 +42,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (userCredential) => {
       if (userCredential) {
-        console.log("상태:로그인");
+        console.log("상태:로그인", userCredential);
         const userInfoList = [
           loginUser(userCredential.displayName),
           loginEmail(userCredential.email),
@@ -77,6 +79,8 @@ function App() {
     justify-content: center;
     padding-top: ${isPadding};
   `;
+  const user = collection(db, "user");
+  console.log("user", user);
 
   return (
     <BrowserRouter>
@@ -110,7 +114,7 @@ function App() {
             <Route path="/news" element={<BoardNews />} />
             <Route element={<RequireAuth />}>
               <Route path="/user/:slug" element={<UserInfo />} />
-              <Route path="/create" element={<PostCreate />} />
+              <Route path="/free/create" element={<PostCreate />} />
             </Route>
             <Route path="/*" element={<NotFound />} />
           </Routes>
