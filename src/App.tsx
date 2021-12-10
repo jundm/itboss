@@ -34,28 +34,27 @@ const PostCreate = loadable(() => import("@/pages/PostCreate"));
 function App() {
   const dispatch = useDispatch();
   const checkUser = useSelector(loginUser);
+  console.log("checkUser", checkUser);
   const [isOpen, setIsOpen] = useState(false);
-  const [isNickname, setIsNickname] = useState("");
-  const [isUid, setIsUid] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (userCredential) => {
       if (userCredential) {
-        console.log("상태:로그인", userCredential);
+        console.log("상태:로그인");
         const userInfoList = [
           loginUser(userCredential.displayName),
           loginEmail(userCredential.email),
           loginUid(userCredential.uid),
         ];
         userInfoList.map((e) => dispatch(e));
-        setIsNickname(checkUser.payload.user.user);
-        setIsUid(checkUser.payload.user.uid);
       } else {
         console.log("상태:로그아웃");
-        sessionStorage.setItem("Nick", "");
-        sessionStorage.setItem("UID", "");
-        setIsNickname("");
-        setIsUid("");
+        const userInfoList = [
+          loginUser(undefined),
+          loginEmail(undefined),
+          loginUid(undefined),
+        ];
+        userInfoList.map((e) => dispatch(e));
       }
     });
   }, [checkUser]);
@@ -88,15 +87,11 @@ function App() {
           <HeaderSmall
             saveLocalStorage={saveLocalStorage}
             setIsOpen={setIsOpen}
-            isNickname={isNickname}
-            isUid={isUid}
           />
         ) : (
           <HeaderBig
             saveLocalStorage={saveLocalStorage}
             setIsOpen={setIsOpen}
-            isNickname={isNickname}
-            isUid={isUid}
           />
         )}
         <Toaster position="top-right" />

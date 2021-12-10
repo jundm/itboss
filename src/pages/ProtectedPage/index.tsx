@@ -1,20 +1,20 @@
 import React from "react";
-import { Navigate, Outlet, useLocation } from "react-router";
+import { loginUid } from "@/utils/Toolkit/Slice/userSlice";
+import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router";
 
 export function RequireAuth() {
-  // let location = useLocation();
-  let authUser = sessionStorage.getItem("UID");
-  console.log("RequireAuth", authUser);
-  if (authUser === "") {
+  const Uid = useSelector(loginUid);
+  const slug = Uid.payload.userReducer.uid;
+  if (slug === undefined) {
     return <Navigate to="/login" />;
-    // return <Navigate to="/login" state={{ from: location }} />;
   }
-  console.log("RequireAuth move outlet");
   return <Outlet />;
 }
 export function AlreadyAuth() {
-  let authUser = sessionStorage.getItem("UID");
-  if (authUser !== "") {
+  const Uid = useSelector(loginUid);
+  const slug = Uid.payload.userReducer.uid;
+  if (slug !== undefined) {
     return <Navigate to="/" />;
   }
   return <Outlet />;

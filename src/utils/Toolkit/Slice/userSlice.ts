@@ -5,14 +5,14 @@ import {
 } from "@reduxjs/toolkit";
 
 interface AuthState {
-  user: string;
+  user?: string;
   email?: string;
   uid?: string;
 }
 const initialState: AuthState = {
-  user: "",
-  email: "",
-  uid: "",
+  user: undefined,
+  email: undefined,
+  uid: undefined,
 };
 
 export const userSlice = createSlice({

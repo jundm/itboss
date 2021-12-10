@@ -10,19 +10,24 @@ import {
 import { updatePassword, updateProfile, User } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
 import { useSelector } from "react-redux";
-import { loginEmail, loginUser } from "@/utils/Toolkit/Slice/userSlice";
+import {
+  loginEmail,
+  loginUid,
+  loginUser,
+} from "@/utils/Toolkit/Slice/userSlice";
 import { Navigate, useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
 
 const userInfo = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const userUid = sessionStorage.getItem("UID");
+  const Uid = useSelector(loginUid);
+  const userUid = Uid.payload.userReducer.uid;
   const user = auth.currentUser;
   const userEmail = useSelector(loginEmail);
-  const userEmailValue = userEmail.payload.user.email;
+  const userEmailValue = userEmail.payload.userReducer.email;
   const userNickname = useSelector(loginUser);
-  const userNicknameValue = userNickname.payload.user.user;
+  const userNicknameValue = userNickname.payload.userReducer.user;
 
   const [inputs, setInputs] = useState({
     email: "",
