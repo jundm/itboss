@@ -28,7 +28,7 @@ const HeaderSmall = (props: HeaderProps) => {
     "https://user-images.githubusercontent.com/80582578/144034497-0aec68e3-393e-4b7c-bfc2-1a68fbfaa569.png";
   if (props.isNickname != "") {
     sessionStorage.setItem("Nick", props.isNickname);
-    sessionStorage.setItem("UID", props.isUid);
+    sessionStorage.setItem("UUID", props.isUid);
   }
   const NickName = sessionStorage.getItem("Nick");
   return (

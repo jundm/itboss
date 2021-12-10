@@ -18,7 +18,6 @@ import {
 } from "@/utils/Toolkit/Slice/userSlice";
 import { AlreadyAuth, RequireAuth } from "./pages/ProtectedPage/index";
 import { collection } from "@firebase/firestore";
-import PostCreate from "./pages/PostCreate";
 
 // 페이지(코드 스플리팅 (페이지 단위로 하는게 좋다))
 const Main = loadable(() => import("@/layouts/Main"));
@@ -30,7 +29,7 @@ const BoardFree = loadable(() => import("@/pages/BoardFree"));
 const BoardNews = loadable(() => import("@/pages/BoardNews"));
 const BoardPopularity = loadable(() => import("@/pages/BoardPopularity"));
 const BoardQuestion = loadable(() => import("@/pages/BoardQuestion"));
-// const PostCreate = loadable(() => import("@/pages/PostCreate"));
+const PostCreate = loadable(() => import("@/pages/PostCreate"));
 
 function App() {
   const dispatch = useDispatch();
