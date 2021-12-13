@@ -45,6 +45,17 @@ const EditorUi = ({}: EditorUiProps) => {
   );
 
   const editorRef = useRef<Editor | null>(null);
+  //dayjs 안쓰고 걍 기본기능으로 ㄱㄱ
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = ("0" + (today.getMonth() + 1)).slice(-2);
+  let day = ("0" + today.getDate()).slice(-2);
+  let dateString = year + "-" + month + "-" + day;
+  let hours = ("0" + today.getHours()).slice(-2);
+  let minutes = ("0" + today.getMinutes()).slice(-2);
+  let seconds = ("0" + today.getSeconds()).slice(-2);
+  let timeString = hours + ":" + minutes + ":" + seconds;
+  let createdAt = dateString + " " + timeString;
 
   const handleClickButton = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -55,7 +66,7 @@ const EditorUi = ({}: EditorUiProps) => {
       await addDoc(collection(db, "posts_free"), {
         title,
         content,
-        createdAt: Date.now(),
+        createdAt,
         updateAt: null,
         creatorId: slug,
         createUser: NickName,
