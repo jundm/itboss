@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
 export const HeaderOutLineBig = styled.header`
   text-align: center;
-  z-index: 20;
+  z-index: 200;
   background: #3f81b3 url(https:source.unsplash.com/DSwBHyWKiVw/1280x720)
     no-repeat center;
   background-size: cover;
@@ -22,16 +23,51 @@ export const AuthenticationDiv = styled.div`
   display: flex;
   justify-content: right;
   text-align: center;
+  z-index: 20;
 `;
 export const LoginSignUp = styled.div`
-  margin-right: 10px;
-  margin-top: 10px;
-  color: #3636e1;
+  z-index: 21;
+  padding: 10px;
+  text-align: center;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  color: #d1e834;
+  /* -webkit-text-stroke: 0.5px #000000; */
+  text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000,
+    0.5px 0.5px 0 #000;
   cursor: pointer;
   :hover {
-    background: gold;
+    background-color: #3a3a8ac7;
+  }
+`;
+export const HeaderLoginDiv = styled.div`
+  display: flex;
+  font-weight: bold;
+  font-size: 1.1rem;
+
+  margin-right: 5px;
+  margin-top: 5px;
+`;
+export const ProfileDiv = styled(HeaderLoginDiv)`
+  color: #ffffff;
+  text-shadow: -0.6px -0.6px 0 #000, 0.6px -0.6px 0 #000, -0.6px 0.6px 0 #000,
+    0.6px 0.6px 0 #000;
+`;
+export const UserNameDiv = styled(HeaderLoginDiv)`
+  color: #d5e433;
+  cursor: pointer;
+  margin-right: 0px;
+  text-shadow: -0.2px -0.2px 0 #000, 0.2px -0.2px 0 #000, -0.2px 0.2px 0 #000,
+    0.2px 0.2px 0 #000;
+  :hover {
+    background-color: #3a3a8ac7;
+  }
+`;
+export const Logout = styled(HeaderLoginDiv)`
+  color: #00000065;
+  cursor: pointer;
+  :hover {
+    color: #00000021;
   }
 `;
 
@@ -58,6 +94,7 @@ export const FaceDiv = styled.div`
   width: 40px;
   height: 40px;
 `;
+
 export const FaceMessageDiv = styled(FaceDiv)`
   display: hidden;
   transform: translate(70px, -110px);
@@ -73,8 +110,10 @@ export const MenuUl = styled.ul`
   display: flex;
   justify-content: center;
   text-align: center;
+  z-index: 21;
 `;
 export const MenuLi = styled.li`
+  display: relative;
   z-index: 21;
   padding: 10px;
   text-align: center;
@@ -88,4 +127,8 @@ export const MenuLi = styled.li`
   :hover {
     background-color: #3a3a8ac7;
   }
+`;
+
+export const HeaderLink = styled(Link)`
+  z-index: 21;
 `;

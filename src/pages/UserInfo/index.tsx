@@ -1,28 +1,41 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   SignUpDiv,
   SignUpForm,
   TextDiv,
   UserFormInput,
+  UserH2,
   UserSubmitInput,
 } from "./styles";
-import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
+import { updatePassword, updateProfile, User } from "@firebase/auth";
 import { auth } from "@/utils/Firebase/firebaseConfig";
+import { useSelector } from "react-redux";
+import {
+  loginEmail,
+  loginUid,
+  loginUser,
+} from "@/utils/Toolkit/Slice/userSlice";
+import { Navigate, useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
 
-interface SignUpProps {}
-
-const SignUp = (setIsNickname: any) => {
+const userInfo = () => {
+  const { slug } = useParams();
   const navigate = useNavigate();
+  const Uid = useSelector(loginUid);
+  const userUid = Uid.payload.userReducer.uid;
+  const user = auth.currentUser;
+  const userEmail = useSelector(loginEmail);
+  const userEmailValue = userEmail.payload.userReducer.email;
+  const userNickname = useSelector(loginUser);
+  const userNicknameValue = userNickname.payload.userReducer.user;
+
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
     setPassword: "",
-    displayName: "",
+    displayName: `${userNicknameValue}`,
   });
   const { email, password, setPassword, displayName } = inputs;
-
   const onChange = useCallback(
     (e: any) => {
       const { name, value } = e.target;
@@ -41,57 +54,54 @@ const SignUp = (setIsNickname: any) => {
     [inputs]
   );
 
-  const Register = (e: { preventDefault: () => void }) => {
+  const UserUpdate = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (password !== setPassword) {
       toast.error("비밀번호가 일치하지 않습니다.", { icon: "👀" });
     } else {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          updateProfile(user, {
-            displayName: displayName,
-          }).then(() => {
-
-            navigate("/");
-            toast.success("회원가입이 성공하였습니다", { icon: "👏" });
-          });
+      if (user) {
+        updateProfile(user, {
+          displayName: displayName,
         })
-        .catch((error) => {
-          const errorCode = error.code;
-          switch (errorCode) {
-            case "auth/email-already-in-use":
-              toast.error("이미 존재하는 메일 입니다.", { icon: "😂" });
-              break;
-            default:
-              toast.error(
-                `${errorCode} 오류 메세지를 관리자에게 알려주세요! Email:bnmva23@hanmail.net`,
-                { icon: "😂", duration: 10000 }
-              );
-          }
-        });
+          .then(() => {
+            updatePassword(user, password)
+              .then(() => {
+                toast.success("회원정보 수정에 성공하였습니다", {
+                  icon: "👏",
+                });
+                navigate("/");
+              })
+              .catch((e) => {
+                toast.error(`비밀번호 오류,${e}`, { icon: "😂" });
+              });
+          })
+          .catch((e) => {
+            toast.error(`닉네임 오류,${e}`, { icon: "😂" });
+          });
+      }
+      setInputs({
+        email: "",
+        password: "",
+        setPassword: "",
+        displayName: `${userNicknameValue}`,
+      });
     }
-    setInputs({
-      email: "",
-      password: "",
-      setPassword: "",
-      displayName: "",
-    });
   };
-
+  if (slug !== userUid) {
+    return <Navigate to="/404" />;
+  }
   return (
     <>
       <SignUpDiv>
-        <SignUpForm onSubmit={Register}>
+        <SignUpForm onSubmit={UserUpdate}>
+          <UserH2>내 정보</UserH2>
           <TextDiv>
             <UserFormInput
               name="email"
               type="email"
-              placeholder="이메일"
-              required
-              value={email}
-              onChange={onChange}
+              value={userEmailValue}
+              disabled
             />
           </TextDiv>
           <TextDiv>
@@ -99,7 +109,6 @@ const SignUp = (setIsNickname: any) => {
               name="password"
               type="password"
               placeholder="비밀번호"
-              required
               value={password}
               onChange={onChange}
             />
@@ -109,7 +118,6 @@ const SignUp = (setIsNickname: any) => {
               name="setPassword"
               type="Password"
               placeholder="비밀번호 확인"
-              required
               value={setPassword}
               onChange={onChange}
             />
@@ -125,11 +133,11 @@ const SignUp = (setIsNickname: any) => {
             />
           </TextDiv>
 
-          <UserSubmitInput type="submit" value="회원가입" />
+          <UserSubmitInput type="submit" value="수정" />
         </SignUpForm>
       </SignUpDiv>
     </>
   );
 };
 
-export default SignUp;
+export default userInfo;
