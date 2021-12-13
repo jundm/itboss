@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const HeaderOutLineSmall = styled.header`
   text-align: center;
   justify-content: center;
-  z-index: 20;
+  z-index: 200;
   background: #3f81b3 url(https:source.unsplash.com/DSwBHyWKiVw/1280x720)
     no-repeat center;
   background-size: cover;
