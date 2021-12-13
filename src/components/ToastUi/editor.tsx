@@ -14,18 +14,10 @@ import "@toast-ui/editor/dist/i18n/ko-kr.js";
 //react
 import React, { useCallback, useRef, useState } from "react";
 import { CenterDiv, CreateForm, SubmitInput, TitleInput } from "./editorStyle";
-import {
-  addDoc,
-  collection,
-  doc,
-  increment,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/utils/Firebase/firebaseConfig";
 import { useSelector } from "react-redux";
 import { loginUid, loginUser } from "@/utils/Toolkit/Slice/userSlice";
-import { useLocation } from "react-router";
-import { getDoc } from "firebase/firestore";
 
 interface EditorUiProps {}
 
@@ -51,27 +43,12 @@ const EditorUi = ({}: EditorUiProps) => {
     },
     [inputs]
   );
-  let location = useLocation();
-  let pathname = location.pathname.split("/");
-
-  // (async () => {
-  //   const getDocRef = await getDoc(docRef);
-  //   console.log("docRef", getDocRef.data());
-  // })();
-
-  // console.log(collection(db, "posts_free"));
-  // const docRef = doc(db, "posts_free");
-  // console.log("doc", doc);
 
   const editorRef = useRef<Editor | null>(null);
 
   const handleClickButton = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (editorRef.current) {
-      const docRef = doc(db, `posts_${pathname[1]}`, `post`);
-      await updateDoc(docRef, { number: increment(1) });
-      const getDocRef = await getDoc(docRef);
-      const getDocRefData = getDocRef.data();
       editorRef.current.getInstance().removeHook("addImageBlobHook");
       const editor = editorRef.current.getInstance();
       const content = editor.getMarkdown();
@@ -82,7 +59,6 @@ const EditorUi = ({}: EditorUiProps) => {
         updateAt: null,
         creatorId: slug,
         createUser: NickName,
-        postNumber: getDocRefData?.number,
       });
     }
     console.log("요청이 완료");
