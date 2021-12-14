@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const HeaderOutLineBig = styled.header`
   text-align: center;
   z-index: 200;
-  background: #3f81b3 url(https:source.unsplash.com/DSwBHyWKiVw/1280x720)
+  background: #3f81b3 url("https://source.unsplash.com/DSwBHyWKiVw/1280x720")
     no-repeat center;
   background-size: cover;
   position: fixed;
