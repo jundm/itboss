@@ -14,22 +14,18 @@ import "@toast-ui/editor/dist/i18n/ko-kr.js";
 //react
 import React, { useCallback, useRef, useState } from "react";
 import { CenterDiv, CreateForm, SubmitInput, TitleInput } from "./editorStyle";
-import {
-  addDoc,
-  collection,
-  doc,
-  increment,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/utils/Firebase/firebaseConfig";
 import { useSelector } from "react-redux";
 import { loginUid, loginUser } from "@/utils/Toolkit/Slice/userSlice";
 import { useLocation } from "react-router";
-import { getDoc } from "firebase/firestore";
 
 interface EditorUiProps {}
 
 const EditorUi = ({}: EditorUiProps) => {
+  const location = useLocation();
+  const locationPath = location.pathname.split("/")[1];
+
   const Uid = useSelector(loginUid);
   const User = useSelector(loginUser);
   const NickName = User.payload.userReducer.user;
@@ -51,38 +47,33 @@ const EditorUi = ({}: EditorUiProps) => {
     },
     [inputs]
   );
-  let location = useLocation();
-  let pathname = location.pathname.split("/");
-
-  // (async () => {
-  //   const getDocRef = await getDoc(docRef);
-  //   console.log("docRef", getDocRef.data());
-  // })();
-
-  // console.log(collection(db, "posts_free"));
-  // const docRef = doc(db, "posts_free");
-  // console.log("doc", doc);
 
   const editorRef = useRef<Editor | null>(null);
+  //dayjs 안쓰고 걍 기본기능으로 ㄱㄱ
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = ("0" + (today.getMonth() + 1)).slice(-2);
+  let day = ("0" + today.getDate()).slice(-2);
+  let dateString = year + "-" + month + "-" + day;
+  let hours = ("0" + today.getHours()).slice(-2);
+  let minutes = ("0" + today.getMinutes()).slice(-2);
+  let seconds = ("0" + today.getSeconds()).slice(-2);
+  let timeString = hours + ":" + minutes + ":" + seconds;
+  let createdAt = dateString + " " + timeString;
 
   const handleClickButton = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (editorRef.current) {
-      const docRef = doc(db, `posts_${pathname[1]}`, `post`);
-      await updateDoc(docRef, { number: increment(1) });
-      const getDocRef = await getDoc(docRef);
-      const getDocRefData = getDocRef.data();
       editorRef.current.getInstance().removeHook("addImageBlobHook");
       const editor = editorRef.current.getInstance();
       const content = editor.getMarkdown();
-      await addDoc(collection(db, "posts_free"), {
+      await addDoc(collection(db, `posts_${locationPath}`), {
         title,
         content,
-        createdAt: Date.now(),
+        createdAt,
         updateAt: null,
         creatorId: slug,
         createUser: NickName,
-        postNumber: getDocRefData?.number,
       });
     }
     console.log("요청이 완료");

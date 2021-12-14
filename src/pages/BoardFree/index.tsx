@@ -8,23 +8,40 @@ import {
   query,
   QuerySnapshot,
 } from "firebase/firestore";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { BoardDiv, BoxDiv, TitleDiv, UserDiv } from "./styles";
+import {
+  BoardDiv,
+  BoxDiv,
+  CenterDiv,
+  CreateButton,
+  DateDiv,
+  DviedDiv,
+  Links,
+  TitleDiv,
+  TopDiv,
+  UserDiv,
+} from "./styles";
+import { useLocation, useNavigate } from "react-router";
 
 interface postsProps {
   id: string;
   createuser: string;
   title: string;
-  content: string;
-  createAt: number;
-  updateAt?: number;
+  createAt: string;
+}
+interface routeProps {
+  h2: string;
 }
 
-const BoardFree = () => {
+const BoardFree = (props: routeProps) => {
+  const location = useLocation();
+  const locationPath = location.pathname.split("/")[1];
+  const { h2 } = props;
+  const navigate = useNavigate();
   const initialValue: postsProps[] = [];
   const [posts, setPosts] = useState(initialValue);
-  const BoardFreeRef = collection(db, "posts_free");
+  const BoardFreeRef = collection(db, `posts_${locationPath}`);
   const BoardFree = query(BoardFreeRef, orderBy("createdAt"));
 
   useEffect(() => {
@@ -38,37 +55,45 @@ const BoardFree = () => {
             tasks.push({
               id: change.doc.id,
               title: change.doc.data().title,
-              content: change.doc.data().content,
               createuser: change.doc.data().createUser,
-              createAt: change.doc.data().createAt,
-              updateAt: change.doc.data().updateAt,
+              createAt: change.doc.data().createdAt,
             });
           }
         });
       setPosts(tasks);
     });
-  }, []);
+  }, [locationPath]);
 
-  console.log("post", posts);
+  // console.log("post", posts);
 
   return (
-    <BoxDiv>
-      <h2>자유 게시판</h2>
-      <div>
-        {posts.map(({ id, createuser, title, content, createAt, updateAt }) => {
-          return (
-            <div key={id}>
-              <BoardDiv>
-                <Link to={`/free/${id}`}>
-                  <TitleDiv>{title}</TitleDiv>
-                </Link>
-                <UserDiv>{createuser}</UserDiv>
-              </BoardDiv>
-            </div>
-          );
-        })}
-      </div>
-    </BoxDiv>
+    <CenterDiv>
+      <TopDiv>
+        <h2>{h2}</h2>
+        <CreateButton onClick={() => navigate(`/${locationPath}/create`)}>
+          글쓰기
+        </CreateButton>
+      </TopDiv>
+      <BoxDiv>
+        <div>
+          {posts.map(({ id, createuser, title, createAt }) => {
+            return (
+              <div key={id}>
+                <Links to={`/${locationPath}/${id}`}>
+                  <BoardDiv>
+                    <TitleDiv>{title}</TitleDiv>
+                    <DviedDiv>
+                      <UserDiv>{createuser}</UserDiv>
+                      <DateDiv>{createAt}</DateDiv>
+                    </DviedDiv>
+                  </BoardDiv>
+                </Links>
+              </div>
+            );
+          })}
+        </div>
+      </BoxDiv>
+    </CenterDiv>
   );
 };
 
