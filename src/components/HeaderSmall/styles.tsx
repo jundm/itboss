@@ -4,7 +4,7 @@ export const HeaderOutLineSmall = styled.header`
   text-align: center;
   justify-content: center;
   z-index: 200;
-  background: #3f81b3 url(https:source.unsplash.com/DSwBHyWKiVw/1280x720)
+  background: #3f81b3 url("https://source.unsplash.com/DSwBHyWKiVw/1280x720")
     no-repeat center;
   background-size: cover;
   position: fixed;
