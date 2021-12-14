@@ -11,6 +11,8 @@
 ## 스택
  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white"> <img src="https://img.shields.io/badge/Redux-Toolkit-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/Emotion-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"> <img src="https://img.shields.io/badge/ToastUiEditor-13AFF0?style=for-the-badge&logo=Chakra UI&logoColor=white">
 
+URL:https://it-boss.web.app/
+
 ## 회원가입
 ![회원](https://user-images.githubusercontent.com/80582578/146005344-cf8facc0-255f-47c4-96f4-90be1c291b0a.gif)
 
