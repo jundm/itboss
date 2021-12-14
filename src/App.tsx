@@ -34,7 +34,7 @@ const BoardForm = loadable(() => import("@/components/BoardForm"));
 function App() {
   const dispatch = useDispatch();
   const checkUser = useSelector(loginUser);
-  console.log("checkUser", checkUser);
+  // console.log("checkUser", checkUser);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -99,16 +99,28 @@ function App() {
               <Route path="login" element={<LogIn />} />
               <Route path="signup" element={<SignUp />} />
             </Route>
-            <Route path="popularity" element={<BoardPopularity />} />
-            <Route path="question" element={<BoardQuestion />} />
-            <Route path="free">
-              <Route index element={<BoardFree />} />
+            <Route path="popularity">
+              <Route index element={<BoardFree h2="인기 게시판" />} />
               <Route path=":slug" element={<BoardForm />} />
+              <Route path="create" element={<PostCreate />} />
             </Route>
-            <Route path="news" element={<BoardNews />} />
+            <Route path="question">
+              <Route index element={<BoardFree h2="질문 게시판" />} />
+              <Route path=":slug" element={<BoardForm />} />
+              <Route path="create" element={<PostCreate />} />
+            </Route>
+            <Route path="free">
+              <Route index element={<BoardFree h2="자유 게시판" />} />
+              <Route path=":slug" element={<BoardForm />} />
+              <Route path="create" element={<PostCreate />} />
+            </Route>
+            <Route path="news">
+              <Route index element={<BoardFree h2="새소식 게시판" />} />
+              <Route path=":slug" element={<BoardForm />} />
+              <Route path="create" element={<PostCreate />} />
+            </Route>
             <Route element={<RequireAuth />}>
               <Route path="user/:slug" element={<UserInfo />} />
-              <Route path="free/create" element={<PostCreate />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

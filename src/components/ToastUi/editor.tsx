@@ -18,10 +18,14 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/utils/Firebase/firebaseConfig";
 import { useSelector } from "react-redux";
 import { loginUid, loginUser } from "@/utils/Toolkit/Slice/userSlice";
+import { useLocation } from "react-router";
 
 interface EditorUiProps {}
 
 const EditorUi = ({}: EditorUiProps) => {
+  const location = useLocation();
+  const locationPath = location.pathname.split("/")[1];
+
   const Uid = useSelector(loginUid);
   const User = useSelector(loginUser);
   const NickName = User.payload.userReducer.user;
@@ -63,7 +67,7 @@ const EditorUi = ({}: EditorUiProps) => {
       editorRef.current.getInstance().removeHook("addImageBlobHook");
       const editor = editorRef.current.getInstance();
       const content = editor.getMarkdown();
-      await addDoc(collection(db, "posts_free"), {
+      await addDoc(collection(db, `posts_${locationPath}`), {
         title,
         content,
         createdAt,

@@ -31,16 +31,22 @@ export const TopDiv = styled.div`
   align-items: center;
 `;
 
-export const TitleDiv = styled.h4``;
+export const TitleDiv = styled.h4`
+  width: 8/12;
+`;
 export const UserDiv = styled.div`
   margin-right: 10px;
+  width: 2/12;
 `;
-export const DateDiv = styled.div``;
+export const DateDiv = styled.div`
+  width: 2/12;
+`;
 export const DviedDiv = styled.div`
   display: flex;
   color: black;
 `;
 export const Links = styled(Link)`
+  flex: 1;
   :link {
     color: #8a6f00;
   }
@@ -55,4 +61,7 @@ export const CreateButton = styled.button`
   padding: 0.25em 1em;
   font-size: 20px;
   cursor: pointer;
+  :hover {
+    background: rgb(235, 186, 95);
+  }
 `;

@@ -22,7 +22,7 @@ import {
   TopDiv,
   UserDiv,
 } from "./styles";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 interface postsProps {
   id: string;
@@ -30,12 +30,18 @@ interface postsProps {
   title: string;
   createAt: string;
 }
+interface routeProps {
+  h2: string;
+}
 
-const BoardFree = () => {
+const BoardFree = (props: routeProps) => {
+  const location = useLocation();
+  const locationPath = location.pathname.split("/")[1];
+  const { h2 } = props;
   const navigate = useNavigate();
   const initialValue: postsProps[] = [];
   const [posts, setPosts] = useState(initialValue);
-  const BoardFreeRef = collection(db, "posts_free");
+  const BoardFreeRef = collection(db, `posts_${locationPath}`);
   const BoardFree = query(BoardFreeRef, orderBy("createdAt"));
 
   useEffect(() => {
@@ -44,7 +50,7 @@ const BoardFree = () => {
       querySnapshot
         .docChanges()
         .forEach((change: DocumentChange<DocumentData>) => {
-          console.log("change", change.doc.data());
+          // console.log("change", change.doc.data());
           if (change.type === "added") {
             tasks.push({
               id: change.doc.id,
@@ -56,15 +62,15 @@ const BoardFree = () => {
         });
       setPosts(tasks);
     });
-  }, []);
+  }, [locationPath]);
 
   // console.log("post", posts);
 
   return (
     <CenterDiv>
       <TopDiv>
-        <h2>자유 게시판</h2>
-        <CreateButton onClick={() => navigate("/free/create")}>
+        <h2>{h2}</h2>
+        <CreateButton onClick={() => navigate(`/${locationPath}/create`)}>
           글쓰기
         </CreateButton>
       </TopDiv>
@@ -73,7 +79,7 @@ const BoardFree = () => {
           {posts.map(({ id, createuser, title, createAt }) => {
             return (
               <div key={id}>
-                <Links to={`/free/${id}`}>
+                <Links to={`/${locationPath}/${id}`}>
                   <BoardDiv>
                     <TitleDiv>{title}</TitleDiv>
                     <DviedDiv>
