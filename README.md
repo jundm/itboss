@@ -37,6 +37,7 @@
 <img width="730" alt="스크린샷 2021-12-14 오후 10 19 47" src="https://user-images.githubusercontent.com/80582578/146005957-f64f194a-110f-46ce-aef8-89e4edf833e1.png">
 <img width="294" alt="스크린샷 2021-12-14 오후 10 21 15" src="https://user-images.githubusercontent.com/80582578/146006193-e22a2b8c-2180-40e2-a09d-d877140412d2.png">
 <img width="730" alt="스크린샷 2021-12-14 오후 10 22 31" src="https://user-images.githubusercontent.com/80582578/146006408-245f8b7f-c4ad-4aba-bdf1-4cac08143707.png">
+
 - 리스트에서 제목, 닉네임, 날짜 표현
 - 글쓰기 마크다운 에디터
 - 게시글 마크다운 뷰어
@@ -55,6 +56,7 @@
 
 ### 개발 중단 하게된 계기
 <img width="924" alt="스크린샷 2021-12-14 오후 9 52 32" src="https://user-images.githubusercontent.com/80582578/146001885-d7d11b38-7007-4b33-afb2-5f2f9587e997.png">
+
 - 개발하면서 잠깐씩 밖에 안만졌는데 읽고 쓰기가 벌써 이렇게나 되버림
 - 무료 용량 초과후에 파이어베이스 가격정책이 생각보다 좀 나가는 편임
 - 실제 서비스 운영경험은 가져보기 힘들겠다는 생각
